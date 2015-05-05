@@ -1,0 +1,21 @@
+{
+  "name": "koyomi",
+  "description": "japanese date calculator",
+  "homepage": "https://github.com/yukik/koyomi",
+  "keywords": ["japanese", "date", "tools"],
+  "author": "Yuki Kurata <yuki.kurata@gmail.com>",
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yukik/koyomi.git"
+  },
+  "main": "lib/koyomi.js",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "node ./test/test.js"
+  },
+  "directories": {},
+  "readmeFilename": "README.md",
+  "license": "MIT"
+}
