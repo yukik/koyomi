@@ -18,6 +18,7 @@
     .ghost   {color: #dcdcdc;}
     td:hover {background: #fff;}
     td.holiday:hover {background: #fcc;}
+}
   </style>
 </head>
 <body>
@@ -28,6 +29,7 @@
     <li><a href='?2015.5'>2015.5</a></li>
     <li><a href='?2015.6'>2015.6</a></li>
     <li><a href='?2015.7'>2015.7</a><br/></li>
+    <li><a href='?2014.4-2015.3'>2014年度</a></li>
     <li><a href='?2015.4-2016.3'>2015年度</a></li>
     <li><a href='?2016.4-2017.3'>2016年度</a></li>
   </ul>
@@ -35,11 +37,14 @@
 
   <script>
     (function () {
-      var koyomi = new Koyomi();
+      // URLより表示範囲を取得 (取得できない場合は今年)
+      var search = decodeURIComponent(location.search);
+      var range = /^\?\d{1,4}(\D\d{1,2}(-\d{1,4}\D\d{1,2})?)?$/.test(search) ?
+        search.slice(1) : new Date().getFullYear();
 
       // 週の並び
       var weeks = '日月火水木金土'.split('');
-      // var weeks = 'Sun,Mon,Tue,Wed,Thu,Fri,Sat'.split(',');
+      // var weeks = 'Sun,Mon,Tue,Wed,Thu,Fri,Sat'.split(','); // 英語ヘッダー
       // var weeks = '月火水木金土日'.split('');  // 週初めを月曜にする場合
 
       // 月の行数を6行に固定する場合はtrue
@@ -52,12 +57,8 @@
             return '<th class="' + name + '">' + weeks[i] + '</th>';
           }).join('');
 
-      // URLより表示範囲を取得 (取得できない場合は今年)
-      var search = decodeURIComponent(location.search);
-      var range = /^\?\d{1,4}(\D\d{1,2}(-\d{1,4}\D\d{1,2})?)?$/.test(search) ?
-        search.slice(1) : new Date().getFullYear();
-
       // カレンダーデータの取得
+      var koyomi = new Koyomi();
       var data = koyomi.getCalendarData(range, weeks[0], six);
 
       // html作成
@@ -72,18 +73,18 @@
 
         // 週初
         if (day.sow) {
-          html += '<tr><th></th>';
+          html += '<tr><th>第' + day.weekNumber +'週</th>';
         }
 
-        // 日データ
-        var className = day.ghost      ? 'ghost'   :
-                        day.holiday    ? 'holiday' :
-                        day.week === 0 ? 'sun'     :
-                        day.week === 6 ? 'sat'     : 'weekday';
-        if (day.holiday) {
-          html += '<td class="' + className + '" title="' + day.holiday + '">' + day.day + '</td>';
+        // 日
+        var className = day.ghost                                        ? 'ghost'   :
+                        day.closed === '祝日' || day.closed === '休業日' ? 'holiday' :
+                        day.week === 0                                   ? 'sun'     :
+                        day.week === 6                                   ? 'sat'     : 'weekday'; 
+        if (day.holiday || day.closed) {
+          html += '<td class="' + className + '" title="' + (day.holiday || day.closed) + '">' + day.day + '</td>';
         } else {
-          html += '<td class="' + className + '">' + day.day + '</td>';
+          html += '<td class="' + className + '">'+ day.day +'</td>';
         }
 
         // 週終

@@ -1,6 +1,6 @@
 
 // 営業日計算(逆引き)
-var Koyomi = require(global.minify ? '../minify' : '..');
+var Koyomi = require(global.minify ? '../lib/minify' : '..');
 var koyomi = new Koyomi();
 var to = koyomi.toEigyobi.bind(koyomi);
 var eq = require('assert').equal;

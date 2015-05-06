@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>params</title>
+  <script type="text/javascript" src="../lib/koyomi.js"></script>
+    <style type='text/css'>
+    * {color: #6a1917;}
+    ul {width: 600px; margin:0;}
+    li {display:block; float: left; width: 200px;}
+    dl {width:600px;}
+    dt {width:160px;float:left;padding:10px;border-bottom:1px solid #ccc;}
+    dd {margin-left:180px;padding:10px;border-bottom:1px solid #ccc;}
+  </style>
+</head>
+<body>
+  <ul>
+    <li><a href='?2015.1.1'>2015.1.1</a></li>
+    <li><a href='?2015.5.5'>2015.5.5</a></li>
+    <li><a href='?2015.7.15'>2015.7.15</a></li>
+    <li><a href='?2015.12.29'>2015.12.29</a></li>
+    <li><a href='?1989.1.7'>1989.1.7</a></li>
+    <li><a href='?1989.1.8'>1989.1.8</a></li>
+    <li><a href='?2015.5.3_12:34'>2015.5.3_12:34</a></li>
+    <li><a href='?2015.8.30_15:20:18'>2015.8.30_15:20:18</a></li>
+    <li><a href='?2016.3.26_8:15:41'>2016.3.26_8:15:41</a></li>
+  </ul>
+  <div style='clear:both;'></div>
+
+  <script>
+    (function () {
+      // URLから変換対象を取得
+      var REG = /^\?(\d{1,4})\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2})\D+(\d{1,2})(?:\D+(\d{1,2}))?)?\D*?$/;
+      var m = location.search.match(REG);
+      var d = m ? m[1]+'-'+m[2]+'-'+m[3]+' '+(m[4]||'00')+':'+(m[5]||'00')+':'+(m[6]||'00') : null;
+
+      // 変換対象
+      var date = d ? new Date(d) : new Date();
+
+      document.title = Koyomi.format(date);
+
+      var html = '<dl>';
+
+      html += '<dt>入力値</dt><dd>' + date + '</dd>';
+      html += '<dt></dt><dd></dd>';
+
+      // サポートしているパラメータ文字列
+      Koyomi.params.forEach(function (key){
+        html += '<dt>' + key + '</dt>' +
+                '<dd>' + Koyomi.format(date, key) + '&nbsp;</dd>';
+      });
+
+      html += '</dl>'
+      document.write(html);
+    })()
+  </script>
+</body>
+</html>

@@ -8,6 +8,7 @@ require('./days');
 require('./eigyobi');
 require('./eigyonissu');
 require('./get-cal-data');
+require('./get-date-array');
 require('./get-week-number');
 require('./holiday');
 require('./last');

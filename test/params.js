@@ -3,7 +3,7 @@
 
 /*jshint maxlen:500*/
 
-var Koyomi = require(global.minify ? '../minify' : '../lib/koyomi');
+var Koyomi = require(global.minify ? '../lib/minify' : '..');
 var koyomi = new Koyomi();
 var format = koyomi.format.bind(koyomi);
 
@@ -160,6 +160,34 @@ test(format('2015-9-1' , 'W'), '36');
 test(format('2015-10-1', 'W'), '40');
 test(format('2015-11-1', 'W'), '44');
 test(format('2015-12-1', 'W'), '49');
+
+// Wj
+test(format('2015-1-1' , 'Wj'), '40');
+test(format('2015-2-1' , 'Wj'), '45');
+test(format('2015-3-1' , 'Wj'), '49');
+test(format('2015-4-1' , 'Wj'), '1');
+test(format('2015-5-1' , 'Wj'), '5');
+test(format('2015-6-1' , 'Wj'), '10');
+test(format('2015-7-1' , 'Wj'), '14');
+test(format('2015-8-1' , 'Wj'), '18');
+test(format('2015-9-1' , 'Wj'), '23');
+test(format('2015-10-1', 'Wj'), '27');
+test(format('2015-11-1', 'Wj'), '32');
+test(format('2015-12-1', 'Wj'), '36');
+
+// wn
+test(format('2015-1-1' , 'wn'), '1');
+test(format('2015-2-1' , 'wn'), '5');
+test(format('2015-3-1' , 'wn'), '9');
+test(format('2015-4-1' , 'wn'), '14');
+test(format('2015-5-1' , 'wn'), '18');
+test(format('2015-6-1' , 'wn'), '23');
+test(format('2015-7-1' , 'wn'), '27');
+test(format('2015-8-1' , 'wn'), '31');
+test(format('2015-9-1' , 'wn'), '36');
+test(format('2015-10-1', 'wn'), '40');
+test(format('2015-11-1', 'wn'), '44');
+test(format('2015-12-1', 'wn'), '49');
 
 // d
 var i;
@@ -428,12 +456,6 @@ test(format('2015-1-1' , 'holiday'), '元日');
 test(format('2015-1-2' , 'holiday'), '');
 test(format('2015-1-12', 'holiday'), '成人の日');
 test(format('2016-8-11', 'holiday'), '山の日');
-
-// holiday2
-test(format('2015-1-1' , 'holiday2'), '元日');
-test(format('2015-1-2' , 'holiday2'), '休業中');
-test(format('2015-1-12', 'holiday2'), '成人の日');
-test(format('2016-8-11', 'holiday2'), '山の日');
 
 // g
 test(format('2015-1-1 0:00' , 'g'),  '0');

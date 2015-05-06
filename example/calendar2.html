@@ -23,7 +23,10 @@
 <body>
   <script>
     (function () {
-      var koyomi = new Koyomi();
+      // URLより表示年を取得 (取得できない場合は今年)
+      var search = decodeURIComponent(location.search);
+      var range = /^\?\d{1,4}$/.test(search) ? search.slice(1) : new Date().getFullYear();
+
       // 週の並び
       var weeks = new Array(6+1).join('日月火水木金土');
       // var weeks = new Array(6+1).join('月火水木金土日');  // 週初めを月曜にする場合
@@ -41,11 +44,8 @@
             return '<th class="' + name + '">' + weeks[i] + '</th>';
           }).slice(0, max).join('');
 
-      // URLより表示年を取得 (取得できない場合は今年)
-      var search = decodeURIComponent(location.search);
-      var range = /^\?\d{1,4}$/.test(search) ? search.slice(1) : new Date().getFullYear();
-
       //カレンダーデータの取得
+      var koyomi = new Koyomi();
       var data = koyomi.getCalendarData(range, weeks[0], true);
 
       // html作成
@@ -57,26 +57,27 @@
               '<a href="?' + (range * 1 + 1) + '">&#x226B;</a>' +
               '</caption>\n';
       html += '<tr><th></th>' + head + '</tr>\n';
-      var cut = false;
+      var cut = 0;
 
       data.forEach(function(day) {
 
         // 月初
         if (day.som) {
-          cut = false;
+          cut = 0;
           html += '<tr><th>' + day.block.slice(-2)*1 + '</th>\n';
         }
 
-        var className = day.ghost      ? 'ghost'   :
-                        day.holiday    ? 'holiday' :
-                        day.week === 0 ? 'sun'     :
-                        day.week === 6 ? 'sat'     : 'weekday';
+        // 日
+        var className = day.ghost                                        ? 'ghost'   :
+                        day.closed === '祝日' || day.closed === '休業日' ? 'holiday' :
+                        day.week === 0                                   ? 'sun'     :
+                        day.week === 6                                   ? 'sat'     : 'weekday';
 
         if (max < ++cut) {
           // 余分なゴースト日を省略
 
-        } else if (day.holiday) {
-          html += '<td class="' + className + '" title="' + day.holiday + '">' + day.day + '</td>';
+        } else if (day.holiday || day.closed) {
+          html += '<td class="' + className + '" title="' + (day.holiday || day.closed) + '">' + day.day + '</td>';
         } else {
           html += '<td class="' + className + '">' + day.day + '</td>';
         }
