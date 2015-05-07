@@ -11,7 +11,7 @@
     "url": "git://github.com/yukik/koyomi.git"
   },
   "main": "lib/koyomi.js",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "test": "node ./test/test.js"
   },
