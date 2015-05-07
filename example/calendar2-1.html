@@ -6,8 +6,6 @@
   <script type="text/javascript" src="../lib/koyomi.js"></script>
   <style type='text/css'>
     * {color: #6a1917;}
-    ul {width: 450px; margin:0;}
-    li {display:block; float: left; width: 150px;}
     caption {font-size: 150%;}
     th {background: #d3ffa8;padding:8px;width:25px;}
     td {background: #f5f5f5;border: 1px solid #eee;text-align: center;padding:8px;}
@@ -23,39 +21,26 @@
 <body>
   <script>
     (function () {
-      // URLより表示年を取得 (取得できない場合は今年)
-      var search = decodeURIComponent(location.search);
-      var range = /^\?\d{1,4}$/.test(search) ? search.slice(1) : new Date().getFullYear();
-
-      // 週の並び
-      var weeks = new Array(6+1).join('日月火水木金土');
-      // var weeks = new Array(6+1).join('月火水木金土日');  // 週初めを月曜にする場合
-
-      // 月の行数を6行に固定する場合はtrue
-      var six = true;
-      
       // 必ず全てゴースト日になる列を省略するための最大値
       var max = 31 + 6;
 
+      // 週の並び (6週分)
+      var weeks = new Array(6+1).join('日月火水木金土').split('').slice(0, max);
+
       // 曜日ヘッダの作成
-      var head = Koyomi.getWeekIndex(weeks.split('')).map(function(x, i){
+      var head = Koyomi.getWeekIndex(weeks).map(function(x, i){
             x =  x * 1;
             var name = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
             return '<th class="' + name + '">' + weeks[i] + '</th>';
           }).slice(0, max).join('');
 
       //カレンダーデータの取得
-      var koyomi = new Koyomi();
-      var data = koyomi.getCalendarData(range, weeks[0], true);
+      var koyomi = new Koyomi({startMonth: 4, startWeek: '日'});
+      var data = koyomi.getCalendarData();
 
       // html作成
       var html = '<table>';
-      html += '<caption>' +
-              '<a href="?' + (range * 1 - 1) + '">&#x226A;</a>' +
-              '&nbsp;&nbsp;&nbsp;' + range + '年&nbsp;&nbsp;&nbsp;' +
-              '&nbsp;&nbsp;&nbsp;' + koyomi.format(range + '-1-1', 'nengonen2') + '年&nbsp;&nbsp;&nbsp;' +
-              '<a href="?' + (range * 1 + 1) + '">&#x226B;</a>' +
-              '</caption>\n';
+      html += '<caption>' + koyomi.formatNendo(null, 'nengonen年度 (Y/n', '-Y/n)') + '</caption>';
       html += '<tr><th></th>' + head + '</tr>\n';
       var cut = 0;
 
@@ -68,16 +53,17 @@
         }
 
         // 日
-        var className = day.ghost                                        ? 'ghost'   :
-                        day.closed === '祝日' || day.closed === '休業日' ? 'holiday' :
-                        day.week === 0                                   ? 'sun'     :
-                        day.week === 6                                   ? 'sat'     : 'weekday';
+        var title     = day.holiday || (day.closed === '休業日' ? '休業日' : null);
+        var className = day.ghost      ? 'ghost'   :
+                        title          ? 'holiday' :
+                        day.week === 0 ? 'sun'     :
+                        day.week === 6 ? 'sat'     : 'weekday';
 
         if (max < ++cut) {
           // 余分なゴースト日を省略
 
-        } else if (day.holiday || day.closed) {
-          html += '<td class="' + className + '" title="' + (day.holiday || day.closed) + '">' + day.day + '</td>';
+        } else if (title) {
+          html += '<td class="' + className + '" title="' + title + '">' + day.day + '</td>';
         } else {
           html += '<td class="' + className + '">' + day.day + '</td>';
         }

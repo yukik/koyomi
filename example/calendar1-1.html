@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>今年度カレンダー</title>
+  <script type="text/javascript" src="../lib/koyomi.js"></script>
+  <style type='text/css'>
+    * {color: #6a1917;}
+    table {float: left;}
+    th {background: #d3ffa8;padding:8px;width:36px;}
+    td {background: #f5f5f5;border: 1px solid #eee;text-align: center;padding:8px;}
+    .weekday {color: #6a1917;}
+    .sat     {color: #7fbfff;}
+    .sun     {color: #ff7f7f;}
+    .holiday {color: #ff7f7f; background: #ffe5e5;}
+    .ghost   {color: #dcdcdc;}
+    td:hover {background: #fff;}
+    td.holiday:hover {background: #fcc;}
+}
+  </style>
+</head>
+<body>
+  <script>
+    (function () {
+      var koyomi = new Koyomi({startMonth: 4, startWeek: '日'});
+      var html = '';
+
+      // 曜日ヘッダ
+      var head = '<th class="sun">日</th><th class="weekday">月</th>' +
+                '<th class="weekday">火</th><th class="weekday">水</th>' +
+                '<th class="weekday">木</th><th class="weekday">金</th> '+
+                '<th class="sat">土</th>';
+
+      koyomi.getCalendarData().forEach(function(day) {
+
+        // 月初
+        if (day.som) {
+          html += '<table>\n' +
+                  '<tr><th>' + day.block + '</th>' + head + '</tr>\n';
+        }
+
+        // 週初
+        if (day.sow) {
+          html += '<tr><th>第' + day.weekNumber +'週</th>';
+        }
+
+        // 日
+        var title     = day.holiday || (day.closed === '休業日' ? '休業日' : null);
+        var className = day.ghost      ? 'ghost'   :
+                        title          ? 'holiday' :
+                        day.week === 0 ? 'sun'     :
+                        day.week === 6 ? 'sat'     : 'weekday';
+        if (title) {
+          html += '<td class="' + className + '" title="' + title + '">' + day.day + '</td>';
+        } else {
+          html += '<td class="' + className + '">'+ day.day +'</td>';
+        }
+
+        // 週終
+        if (day.eow) {
+          html += '</tr>\n';
+        }
+
+        // 月終
+        if (day.eom) {
+          html += '</table>\n';
+        }
+
+      });
+      
+      document.write(html);
+
+    })();
+  </script>
+</body>
+</html>

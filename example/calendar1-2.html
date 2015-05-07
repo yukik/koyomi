@@ -77,12 +77,13 @@
         }
 
         // 日
-        var className = day.ghost                                        ? 'ghost'   :
-                        day.closed === '祝日' || day.closed === '休業日' ? 'holiday' :
-                        day.week === 0                                   ? 'sun'     :
-                        day.week === 6                                   ? 'sat'     : 'weekday'; 
-        if (day.holiday || day.closed) {
-          html += '<td class="' + className + '" title="' + (day.holiday || day.closed) + '">' + day.day + '</td>';
+        var title     = day.holiday || (day.closed === '休業日' ? '休業日' : null);
+        var className = day.ghost      ? 'ghost'   :
+                        title          ? 'holiday' :
+                        day.week === 0 ? 'sun'     :
+                        day.week === 6 ? 'sat'     : 'weekday';
+        if (title) {
+          html += '<td class="' + className + '" title="' + title + '">' + day.day + '</td>';
         } else {
           html += '<td class="' + className + '">'+ day.day +'</td>';
         }

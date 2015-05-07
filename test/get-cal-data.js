@@ -40,7 +40,7 @@ eq(get('2015/1', null), [
   { som: false, eom: true , year: 2015, month: 1 , day: 31, week: 6, opened: false, closed: '定休日', holiday: ''        },
 ]);
 
-eq(get('2015/1', 'sun'), [
+eq(get('2015/1', 'sun', false), [
   { som: true , eom: false, sow: true , eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 28, week: 0, opened: false, closed: '定休日', holiday: ''        , weekNumber: 1},
   { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 29, week: 1, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1},
   { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 30, week: 2, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1},
