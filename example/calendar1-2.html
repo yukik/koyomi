@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>カレンダー</title>
-  <script type="text/javascript" src="../lib/koyomi.js"></script>
+  <script type="text/javascript" src="../public/koyomi.min.js"></script>
   <style type='text/css'>
     * {color: #6a1917;}
     ul {width: 450px; margin:0;}
@@ -18,7 +18,6 @@
     .ghost   {color: #dcdcdc;}
     td:hover {background: #fff;}
     td.holiday:hover {background: #fcc;}
-}
   </style>
 </head>
 <body>
@@ -35,8 +34,24 @@
   </ul>
   <div style='clear:both;'></div>
 
+  <div id='cal'><div>;
+
   <script>
     (function () {
+
+      var koyomi = new Koyomi();
+
+      // 仮のイベントや強制的な営業日や休業日の設定
+      for(var i = 1; i < 11; i++) {
+        var d = Koyomi.add(new Date(), i + '日');
+        if (i % 2 === 0) {
+          koyomi.open(d);
+        } else {
+          koyomi.close(d);
+        }
+        koyomi.addEvent(d, 'イベントあります');
+      }
+
       // URLより表示範囲を取得 (取得できない場合は今年)
       var search = decodeURIComponent(location.search);
       var range = /^\?\d{1,4}(\D\d{1,2}(-\d{1,4}\D\d{1,2})?)?$/.test(search) ?
@@ -58,7 +73,6 @@
           }).join('');
 
       // カレンダーデータの取得
-      var koyomi = new Koyomi();
       var data = koyomi.getCalendarData(range, weeks[0], six);
 
       // html作成
@@ -82,6 +96,9 @@
                         title          ? 'holiday' :
                         day.week === 0 ? 'sun'     :
                         day.week === 6 ? 'sat'     : 'weekday';
+        if (day.events.length) {
+          title = (title ? title + '\n' : '') + day.events.join('\n');
+        }
         if (title) {
           html += '<td class="' + className + '" title="' + title + '">' + day.day + '</td>';
         } else {
@@ -100,7 +117,7 @@
 
       });
       
-      document.write(html);
+      document.getElementById('cal').innerHTML = html;
 
     })();
   </script>

@@ -1,0 +1,161 @@
+# 日付の計算
+
+以下のすべてのメソッドは、クラスメソッドとしてもインスタンスメソッドしても使用できます
+
+# add
+
+加算(減算)することができる単位は、年、ケ月、週、日、時間、分、秒です  
+各単位で使用できる記述は次のとおりです
+
+  + 年: `y`, `year`, `years`, `年`, `カ年`, `ヶ年`, `ケ年`, `か年`
+  + 月: `m`, `mo`, `mon`, `month`, `months`, `月`, `カ月`, `ヶ月`, `ケ月`, `か月`
+  + 週: `w`, `week`, `weeks`, `週`, `週間`
+  + 日: `d`, `days`, `day`, `日`
+  + 時: `h`, `hour`, `hours`, `時間`
+  + 分: `i`, `min`, `minute`, `minutes`, `分`
+  + 秒: `s`, `sec`, `second`, `seconds`, `秒`
+
+半角数字 + 単位を第二引数に設定します
+複数の期間を指定することもできます
+
+
+`{Date} Koyomi.add({Date|String} date, {String} value)`
+
+```
+Koyomi.add('2015-5-10', '3年'); // 2018-5-10
+Koyomi.add('2015-5-10', '2週間6日'); // 2015-5-30
+```
+
+うるう年の2/29の日付からの年の加減算は、2/28に丸められます
+
+```
+Koyomi.add('2016-2-29', '1年'); // 2017-2-28
+```
+
+月末の日付からの月の加減算は、月末に丸められます
+
+```
+Koyomi.add('2016-3-31', '1ヶ月'); // 2017-4-30
+```
+
+
+# isLeap
+
+うるう年判定
+
+`{Boolean} Koyomi.isLeap({Number|Date|String} year/date)`
+
+```
+Koyomi.isLeap('2015-1-1'); // false
+Koyomi.isLeap(2016); // true
+```
+
+# start
+
+所属する単位の先頭の値を返します  
+使用できる単位はaddの時と同じです  
+このメソッドはクラスメソッドとインスタンスメソッドで動作が異なります  
+年を指定した時は、クラスメソッドが年始の1月1日を返すのに対し、インスタンスメソッドは年度の初め(プロパティstartMonth)を返します  
+週を指定した時は、クラスメソッドは月曜日を返すのに対し、インスタンスメソッドは週の初め(プロパティtartWeek)を返します
+(クラスメソッドはconfig.jsのSTART_MONTH, START_WEEKに依存しています)
+
+`{Date} Koyomi.start({Date|String} date, {String} grid)`
+
+```
+Koyomi.start('2015-4-20', '月'); // 2015-4-1
+```
+
+# end
+
+所属する単位の最後の値を返します  
+使用できる単位はaddの時と同じです  
+このメソッドはクラスメソッドとインスタンスメソッドで動作が異なります  
+年を指定した時は、クラスメソッドが年末の12月31日を返すのに対し、インスタンスメソッドは年度の終り(プロパティstartMonthに依存)を返します  
+週を指定した時は、クラスメソッドは日曜日を返すのに対し、インスタンスメソッドは週の最後(プロパティtartWeek依存)を返します  
+(クラスメソッドはconfig.jsのSTART_MONTH, START_WEEKに依存しています)
+
+`{Date} Koyomi.end({Date|String} date, {String} grid)`
+
+```
+Koyomi.end('2015-4-20', '月'); // 2015-4-30 23:59:59.999
+```
+
+# diffDays
+
+２つの日の差の日数を返します  
+計算時２つの日の時の部分は切り捨てられます
+
+`{Number} Koyomi.diffDays({Date|String} from, {String|Date} to)`
+
+```
+Koyomi.diffDays('2015-1-5', '2015-1-15') // 10
+```
+
+
+# diffMinutes
+
+２つの時間の分数差を返します
+秒は切り捨てられます
+
+`{Number} Koyomi.diffMinutes({Date|String} from, {String|Date} to)`
+
+```
+Koyomi.diffMinutes('2015-1-5 12:10', '2015-1-5 12:35') // 20
+```
+
+# diffSeconds
+
+２つの時間の秒数差を返します
+ミリ秒は切り捨てられます
+
+`{Number} Koyomi.diffSeconds({Date|String} from, {String|Date} to)`
+
+```
+Koyomi.diffSeconds('2015-1-5 12:12:10:', '2015-1-5 12:12:35') // 20
+```
+
+# yearDays
+
+年の日数を返します
+
+`{Number} Koyomi.yearDays({Date|String} date)`
+
+```
+Koyomi.yearDays('2015-1-10') // 365
+```
+
+# monthDays
+
+月の日数を返します
+
+`{Number} Koyomi.monthDays({Date|String} date)`
+
+```
+Koyomi.monthDays('2015-1-10') // 31
+```
+
+# passYearDays
+
+年初の経過日数を返します
+
+`{Number} Koyomi.yearDays({Date|String} date)`
+
+```
+Koyomi.yearDays('2015-1-10') // 365
+```
+
+
+# passDays
+
+
+
+
+# remainYearDays
+
+
+
+
+# remainDays
+
+
+

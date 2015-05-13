@@ -1,6 +1,6 @@
 
 // 祝日休業判別
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var koyomi = new Koyomi();
 var isClosed = koyomi.isHolidayClosed.bind(koyomi);
 var test = require('assert').equal;

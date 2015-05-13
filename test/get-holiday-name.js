@@ -1,7 +1,7 @@
 
 // 祝日名
 
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var get = Koyomi.getHolidayName.bind(Koyomi);
 var test = require('assert').equal;
 

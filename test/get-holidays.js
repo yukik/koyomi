@@ -1,6 +1,6 @@
 
 // 祝日
-var get = require(global.minify ? '../lib/minify' : '..').getHolidays;
+var get = require('..').getHolidays;
 var test = require('assert').deepEqual;
 
 

@@ -1,5 +1,5 @@
 // 営業日数
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var koyomi = new Koyomi();
 var count = koyomi.countEigyobi.bind(koyomi);
 var test = require('assert').equal;

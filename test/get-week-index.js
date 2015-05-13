@@ -2,7 +2,7 @@
 
 // 週番号
 
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var get = Koyomi.getWeekIndex.bind(Koyomi);
 var eq = require('assert').deepEqual;
 

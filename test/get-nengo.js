@@ -1,6 +1,6 @@
 
 // 年号取得
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var get = Koyomi.getNengo.bind(Koyomi);
 var eq = require('assert').deepEqual;
 

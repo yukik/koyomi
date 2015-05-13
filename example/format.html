@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>フォーマット</title>
+  <script type="text/javascript" src="../public/koyomi.min.js"></script>
+  <style type='text/css'>
+    * {color: #6a1917;}
+    ul {width: 600px; margin:0;}
+    li {display:block; float: left; width: 200px;}
+    dl {width:600px;}
+    dt {width:160px;float:left;padding:10px;border-bottom:1px solid #ccc;}
+    dd {margin-left:180px;padding:10px;border-bottom:1px solid #ccc;}
+  </style>
+  <script>
+    var koyomi = new Koyomi();
+
+    function onLoad() {
+      var html = '';
+      Object.keys(koyomi.parameters).forEach(function (key){
+        html += '<dt><input value="' + key + '" />&nbsp;&nbsp;&nbsp;&#x226B;</dt><dd><span></span>&nbsp;</dd>';
+      });
+      document.getElementById('list').innerHTML = html;
+      update();
+    }
+
+    function update() {
+      var inputs = document.getElementsByTagName('input');
+      var outputs = document.getElementsByTagName('span');
+      var value = inputs[0].value;
+      [].slice.call(inputs).forEach(function(x, i){
+        if (i) {
+          outputs[i].innerText = koyomi.format(value, x.value || '{ERR}入力してください');
+        }
+      });
+    }
+  </script>
+
+
+</head>
+<body onKeyup="update();" onLoad="onLoad();">
+
+  <dl>
+    <dt><input type="text" value="2015-5-7 12:34:56" id="val" /></dt><dd><span></span>&nbsp;</dd>
+  </dl>
+
+  <dl id="list"></dl>
+</body>
+</html>

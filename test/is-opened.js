@@ -1,6 +1,6 @@
 
 // 営業日判定
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var koyomi = new Koyomi();
 var isOpened = koyomi.isOpened.bind(koyomi);
 var test = require('assert').equal;

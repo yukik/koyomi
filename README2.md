@@ -82,8 +82,7 @@ Koyomiクラスには次のようなクラスメソッドが用意されてい�
 
 ## 日時オブジェクトの作成
 
-  + `{Date} Koyomi.toDate ({Date|String|Array} date, {Boolean} trim, {Boolean} clone)`
-  + trimをtrueにすることで、時以下を切り捨てます。既定値 `false`
+  + `{Date} Koyomi.toDate ({Date|String|Array} date, {Boolean} trim)`
   + 和暦の入力も限定的に受け付けます
     + 指定できるのは日付のみ
     + 数字は半角のみ
@@ -100,6 +99,9 @@ Koyomiクラスには次のようなクラスメソッドが用意されてい�
   + 元のDateオブジェクトを安全に残しながら、日付の操作を行いたい場合にtrueにします
   + このメソッドは、他のメソッドの引数で`{Date|String} date`となっているものすべてで利用されます
   + そのため、他のメソッドでも和暦の入力や配列での入力を受け付けることができます
+  + trimをtrueにすることで、時以下を切り捨てます。既定値 `null`
+  + trimにfalseを設定した場合は、切り捨てはしませんが、必ず複製されたDateオブジェクトを返します
+  + trimにnullまたは指定なしの場合は、Dateオブジェクトの場合にそのまま参照をかえします
 
 ## 週のインデックスを取得
 
@@ -252,124 +254,6 @@ koyomi.startWeek = '日';
 ## メソッド
 
 
-### フォーマット
-
-フォーマットとは、日時からある形式に基づいた文字列を作成することです  
-指定できる形式はパラメータ文字列と呼ばれる部品を組み合わせて作成します  
-パラメータ文字列はPHPの[date関数](http://php.net/manual/ja/function.date.php)をベースに拡張しています  
-拡張の部分では日本の年号、祝日、営業日に対応しています  
- (タイムゾーン等一部のパターンは未実装です)  
-クラスメソッドでもフォーマットが存在しましたが、インスタンスメソッドは完全に上位互換になっています
-
-定義
-
-  `{String} koyomi.format( {Date|String} date, {String} format, {Number} eigyobi, {Boolean} include )`  
-
-  + date
-    + 整形対象の日時です
-  + format
-    + 整形するためのフォーマットです
-    + パラメータ文字列を組み合わせて表現します
-    + 既定値はkoyomi.defaultFormatです
-  + eigyobi
-    + 数字を設定することにより、整形対象の日付をずらすことができます
-    + 営業日の計算に関しては、`koyomi.addEigyobi`で詳しく説明します
-    + 既定値は設定されておらず、指定しない場合はdateがそのまま整形対象になります
-  + include
-    + 営業日計算時に、初日をカウントするかどうかです
-    + 既定値はfalseです
-
-例
-
-```
-koyomi.format(new Date('2015-4-27'), 'Y/m/d');  // '2015/4/27'
-koyomi.format('2015-4-27', 'Y/m/d');  // '2015/4/27'
-```
-
-２つめのように日付をあらわす文字列を直接引数にしてもかまいません
-
-次のようにすると翌営業日を対象にします
-
-```
-koyomi.format('2015-5-4', 'Y/m/d', 1);  // '2015/5/7'
-```
-
-includeをtrueにすると初日も営業日のカウントに含めます
-
-```
-koyomi.format('2015-5-1', 'Y/m/d', 1, true);  // '2015/5/1'
-```
-
-#### パラメータ文字列
-
-以下の文字が format パラメータ文字列として認識されます  
-パラメータ文字列の中には、クラスメソッドでは使用できないものも存在します
-
-| 文字     | 説明                                                          | 戻り値の例 | インスタンスのみ |
-|----------|---------------------------------------------------------------------|--------------------|----|
-| hizuke   | 日付 `Y/m/d`を指定したのと同じ                                      | 2015/04/06         |    |
-| wareki   | 和暦 年区切り   `nengonen年n月j日`を指定したのと同じ                | 平成1年1月7日      |    |
-| wareki2  | 和暦 日付区切り `NengoNen年n月j日`を指定したのと同じ                | 昭和64年1月7日     |    |
-| Y        | 年 ４桁                                                             | 2014               |    |
-| y        | 年 下２桁                                                           | 14                 |    |
-| L        | うるう年判定  1:うるう年、0:平年                                    | 1, 0               |    |
-| nengo    | 和暦 年区切り 年号 1872年以前は西暦                                 | 昭和, 平成         |    |
-| nengo2   | 和暦 年区切り 年号 省略表示                                         | S, H               |    |
-| nen      | 和暦 年区切り 年                                                    | 1, 27              |    |
-| nen2     | 和暦 年区切り 年   1は元                                            | 元, 27             |    |
-| nen3     | 和暦 年区切り 年   1は元 その他は漢数字                             | 元, 二十七         |    |
-| nen4     | 和暦 年区切り 年   1は元 その他は漢数字(省略形)                     | 元, 二七           |    |
-| Nengo    | 和暦 日付区切り 年号 1872年以前は西暦                               | 昭和, 平成         |    |
-| Nengo2   | 和暦 日付区切り 年号 省略表示                                       | S, H               |    |
-| Nen      | 和暦 日付区切り 年                                                  | 1, 27              |    |
-| Nen2     | 和暦 日付区切り 年   1は元                                          | 元, 27             |    |
-| Nen3     | 和暦 日付区切り 年   1は元 その他は漢数字                           | 元, 二十七         |    |
-| Nen4     | 和暦 日付区切り 年   1は元 その他は漢数字(省略形)                   | 元, 二七           |    |
-| m        | 月 0あり                                                            | 08, 12             |    |
-| n        | 月 0なし                                                            | 8, 12              |    |
-| F        | 月 英語                                                             | August             |    |
-| M        | 月 英語 省略形                                                      | Aug                |    |
-| tuki     | 月 漢数字                                                           | 八, 十二           |    |
-| tuki2    | 月 漢数字 省略形                                                    | 八, 一二           |    |
-| t        | 月の日数                                                            | 28, 29, 30, 31     |    |
-| W        | 週番号   年の第何週目かを示す。始まりの月は1月、週の始まりは月曜日  | 1,2, 42, 53        |    |
-| Wj       | 週番号   年の第何週目かを示す。始まりの月は4月、週の始まりは日曜日  | 1,2, 42, 53        |    |
-| Wn       | 週番号   年の第何週目かを示す。インスタンスの設定に依存             | 1,2, 42, 53        | 〇 |
-| d        | 日 0あり                                                            | 05, 15, 25         |    |
-| j        | 日 0なし                                                            | 5, 15, 25          |    |
-| niti     | 日 漢数字                                                           | 五, 十五, 二十五   |    |
-| niti2    | 日 漢数字 省略形                                                    | 五, 一五, 二五     |    |
-| S        | 接頭語                                                              | st, nd, rd, th     |    |
-| z        | 年通算日数  0から開始                                               | 0, 38, 364         |    |
-| w        | 曜日 日:0 -> 土:6                                                   | 0, 6               |    |
-| N        | 曜日 月:1 -> 日:7                                                   | 1, 7               |    |
-| l        | 曜日 英語                                                           | Monday             |    |
-| D        | 曜日 英語 省略形                                                    | Mon                |    |
-| yobi     | 曜日 日本語 省略形                                                  | 月, 火, 水         |    |
-| yobi2    | 曜日 日本語 省略形 祝日は曜日の代わりに祝                           | 月, 火, 祝         |    |
-| yobi3    | 曜日 日本語 祝日は曜日の代わりに祝日                                | 月曜日, 祝日       |    |
-| eigyo    | 曜日 日本語 省略形 休業日は曜日の代わりに休                         | 月, 火, 休         | 〇 |
-| eigyo2   | 曜日 日本語 休業日は曜日の代わりに休業日                            | 月曜日,   休業日   | 〇 |
-| closed   | 休業理由                                                            | 祝日,休業日,定休日 | 〇 |
-| holiday  | 祝日名 日本語 祝日でない場合は空文字                                | 元日, 成人の日     |    |
-| g        | 時 12時間制 0なし                                                   | 3, 9               |    |
-| G        | 時 24時間制 0なし                                                   | 3, 9, 15           |    |
-| h        | 時 12時間制 0あり                                                   | 03, 09             |    |
-| H        | 時 24時間制 0あり                                                   | 03, 09, 15         |    |
-| i        | 分 0あり                                                            | 03, 09             |    |
-| i2       | 分 0なし                                                            | 3, 9               |    |
-| s        | 秒 0あり                                                            | 03, 09, 15         |    |
-| s2       | 秒 0なし                                                            | 3, 9, 15           |    |
-| u        | マイクロ秒 0あり (ミリ秒までしか計測できないので下3桁は常に0になる) | 065000             |    |
-| a        | am/pm                                                               | am, pm             |    |
-| A        | AM/PM                                                               | AM, PM             |    |
-| aj       | 午前/午後                                                           | 午前, 午後         |    |
-
-
-パラメータ文字列を駆使することにより、思い通りに整形することができます  
-`koyomi.format('2015-5-7 10:26:46', 'D M d Y H:i:s')` &#x226B; `'Thu May 07 2015 10:26:46'`
-
-
 
 ## 営業日の加算
 
@@ -420,6 +304,25 @@ koyomi.format('2015-5-1', 'Y/m/d', 1, true);  // '2015/5/1'
     + 終了日
     + 必須です
 
+## 個別に営業日を設定
+
+定休日や祝日より優先して、営業日に設定することができます
+
+`{Boolean} koyomi.open({Date|String} date)`
+
+## 個別に休業日を設定
+
+定休日や祝日より優先して、休業日に設定することができます
+
+`{Boolean} koyomi.close({Date|String} date)`
+
+## 個別に設定した営業日・休業日を暦どおりに設定
+
+`koyomi.open`、`koyomi.open`の設定をキャンセルし、暦どおりに設定します
+
+`{Boolean} koyomi. reset({Date|String} date)`
+
+
 ## 週番号の取得
 
 週番号を取得することができます  
@@ -461,6 +364,34 @@ koyomi.format('2015-5-1', 'Y/m/d', 1, true);  // '2015/5/1'
   + 4月初めの年度では、`koyomi.formatNendo('2015-3-5')`は`'2014/4-2015/3'`と返されます
 
 
+## イベントの追加
+
+日に対してイベントを追加することができます  
+この情報は`koyomi.getEvent`のほかに、カレンダーデータでも取得できます
+
+`{Number} koyomi.addEvent({Date|String} date, {String} value)`
+
+  + 戻り値に追加したイベントのインデックスを返します
+
+
+## イベントの削除
+
+追加されたイベントを削除することができます
+
+`{Boolean} koyomi.removeEvent({Date|String} date, {Number} index)`
+
+  + indexを省略した場合は、すべてのイベントを削除します
+  + 戻り値は削除が成功したかどうかです
+
+## イベントの取得
+
+日に対して設定されているイベントを取得します
+
+`{Array} koyomi.getEvents({Date|String} date)`
+
+
+    
+
 
 ## カレンダーデータの取得
 
@@ -482,25 +413,27 @@ koyomi.format('2015-5-1', 'Y/m/d', 1, true);  // '2015/5/1'
 次のようなデータを取得することができます
 
 ```
-koyomi.getCalendarData('2015/5', '日', true) ->
-
+koyomi.getCalendarData('2015/1', 'sun', 'true')
 [
-  {block: "2015/05", day: 26, eom: false, eow: false, ghost: true, holiday: "", month: 4, opened: false, som: true, sow: true, week: 0, year: 2015, weekNumber: 1},
-  {block: "2015/05", day: 27, eom: false, eow: false, ghost: true, holiday: "", month: 4, opened: true, som: false, sow: false, week: 1, year: 2015, weekNumber: 1},
-  {block: "2015/05", day: 28, eom: false, eow: false, ghost: true, holiday: "", month: 4, opened: true, som: false, sow: false, week: 2, year: 2015, weekNumber: 1},
-  {block: "2015/05", day: 29, eom: false, eow: false, ghost: true, holiday: "昭和の日", month: 4, opened: false, som: false, sow: false, week: 3, year: 2015, weekNumber: 1},
-  {block: "2015/05", day: 30, eom: false, eow: false, ghost: true, holiday: "", month: 4, opened: true, som: false, sow: false, week: 4,  year: 2015, weekNumber: 1},
-  {block: "2015/05", day: 1, eom: false, eow: false, ghost: false, holiday: "", month: 5, opened: true, som: false, sow: false, week: 5, year: 2015, weekNumber: 1},
-  {block: "2015/05", day: 2, eom: false, eow: true, ghost: false, holiday: "", month: 5, opened: false, som: false, sow: false, week: 6, year: 2015, weekNumber: 1},
-    (中略)
-  {block: "2015/05", day: 31, eom: false, eow: false, ghost: false, holiday: "", month: 5, opened: false, som: false, sow: true, week: 0, year: 2015, weekNumber: 6},
-  {block: "2015/05", day: 1, eom: false, eow: false, ghost: true, holiday: "", month: 6, opened: true, som: false, sow: false, week: 1, year: 2015, weekNumber: 6},
-  {block: "2015/05", day: 2, eom: false, eow: false, ghost: true, holiday: "", month: 6, opened: true, som: false, sow: false, week: 2, year: 2015, weekNumber: 6},
-  {block: "2015/05", day: 3, eom: false, eow: false, ghost: true, holiday: "", month: 6, opened: true, som: false, sow: false, week: 3, year: 2015, weekNumber: 6},
-  {block: "2015/05", day: 4, eom: false, eow: false, ghost: true, holiday: "", month: 6, opened: true, som: false, sow: false, week: 4, year: 2015, weekNumber: 6},
-  {block: "2015/05", day: 5, eom: false, eow: false, ghost: true, holiday: "", month: 6, opened: true, som: false, sow: false, week: 5, year: 2015, weekNumber: 6},
-  {block: "2015/05", day: 6, eom: true, eow: true, ghost: true, holiday: "", month: 6, opened: false, som: false, sow: false, week: 6, year: 2015, weekNumber: 6}
-]
+  { som: true , eom: false, sow: true , eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 28, week: 0, opened: false, closed: '定休日', holiday: ''        , weekNumber: 1, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 29, week: 1, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 30, week: 2, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 31, week: 3, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: false, block: '2015/01', year: 2015, month: 1 , day: 1 , week: 4, opened: false, closed: '祝日'  , holiday: '元日'    , weekNumber: 1, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: false, block: '2015/01', year: 2015, month: 1 , day: 2 , week: 5, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
+  { som: false, eom: false, sow: false, eow: true , ghost: false, block: '2015/01', year: 2015, month: 1 , day: 3 , week: 6, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
+                (中略)
+  { som: false, eom: false, sow: false, eow: false, ghost: false, block: '2015/01', year: 2015, month: 1 , day: 29, week: 4, opened: true , closed: ''      , holiday: ''        , weekNumber: 5, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: false, block: '2015/01', year: 2015, month: 1 , day: 30, week: 5, opened: true , closed: ''      , holiday: ''        , weekNumber: 5, events: []},
+  { som: false, eom: false, sow: false, eow: true , ghost: false, block: '2015/01', year: 2015, month: 1 , day: 31, week: 6, opened: false, closed: '定休日', holiday: ''        , weekNumber: 5, events: []},
+  { som: false, eom: false, sow: true , eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 1 , week: 0, opened: false, closed: '定休日', holiday: ''        , weekNumber: 6, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 2 , week: 1, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 3 , week: 2, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 4 , week: 3, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 5 , week: 4, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
+  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 6 , week: 5, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
+  { som: false, eom: true , sow: false, eow: true , ghost: true , block: '2015/01', year: 2015, month: 2 , day: 7 , week: 6, opened: false, closed: '定休日', holiday: ''        , weekNumber: 6, events: []},
+]);
 ```
 
 最初の行のデータは4/26のもので、最後の行のデータは6/6のものです  
@@ -581,6 +514,9 @@ Viewコードではデザインだけに集中することができます
     + この週番号はプロパティの`startMonth`と`startWeek`の影響はうけていません
     + メソッド`getCalendarData`で取得されたデータ内だけの週番号です
     + 年度の週番号を得たい場合は、順次処理のなかで`getWeekNumber`
+  + events
+    + イベント
+    + `koyomi.addEvents`で追加されたイベントです
 
 カレンダー作成時に`getCalendarDate`を利用することは大きな利点があります
 

@@ -1,15 +1,16 @@
 
 // 営業日計算
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var koyomi = new Koyomi();
+var d = require('../lib/fx/toDate');
 var add = koyomi.addEigyobi.bind(koyomi);
 var eq = require('assert').equal;
 function test(actual, expected) {
-  eq(actual ? actual.toString() : null, expected ? new Date(expected).toString() : null);
+  eq(actual ? actual.toString() : null, expected ? d(expected).toString() : null);
 }
 
 test(add('2015-5-1', 0), '2015-5-1');
-test(add('2015-5-2', 0), '2015-5-7');
+test(add('2015-5-2', 0),  20150507);
 test(add('2015-5-3', 0), '2015-5-7');
 test(add('2015-5-4', 0), '2015-5-7');
 test(add('2015-5-5', 0), '2015-5-7');

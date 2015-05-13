@@ -1,11 +1,12 @@
 
 // 営業日計算(逆引き)
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var koyomi = new Koyomi();
 var to = koyomi.toEigyobi.bind(koyomi);
 var eq = require('assert').equal;
+var d = require('../lib/fx/toDate');
 function test(actual, expected) {
-  eq(actual ? actual.toString() : null, expected ? new Date(expected).toString() : null);
+  eq(actual ? actual.toString() : null, expected ? d(expected).toString() : null);
 }
 
 // params -> date, days, include

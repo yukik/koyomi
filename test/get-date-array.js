@@ -1,5 +1,5 @@
 // 週番号の取得
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var get = Koyomi.getDateArray;
 var eq = require('assert').deepEqual;
 

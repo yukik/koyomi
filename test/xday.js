@@ -1,8 +1,7 @@
 // 第x name曜日 計算
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var get = Koyomi.getXDay;
 var eq = require('assert').equal;
-
 
 eq(get(2015,1,1,'月'), 5);
 eq(get(2015,1,2,'月'), 12);

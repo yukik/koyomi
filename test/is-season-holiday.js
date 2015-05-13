@@ -1,6 +1,6 @@
 
 // 定休日判別
-var Koyomi = require(global.minify ? '../lib/minify' : '..');
+var Koyomi = require('..');
 var koyomi = new Koyomi();
 var season = koyomi.isSeasonHoliday.bind(koyomi);
 var test = require('assert').equal;
