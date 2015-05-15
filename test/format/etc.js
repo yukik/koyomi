@@ -5,9 +5,9 @@ var eq = require('assert').equal;
 
 // 存在しないパラメータ文字列
 eq(format('2015-4-10', '{Ymd}'), '{Ymd}');
-eq(format('2015-4-10', '{Y}{m}{d}'), '{Y}0{d}');
+eq(format('2015-4-10', '{YYYY}{m}{d}'), '{YYYY}0{d}');
 
 // 和暦入力
-eq(format('S50-1-2', 'YYYYMMDD'), '19750102');
-eq(format('昭和50年1月2日', 'YYYYMMDD'), '19750102');
-eq(format('S50 1 2', 'YYYYMMDD'), '19750102');
+eq(format('S50-1-2', 'YMMDD'), '19750102');
+eq(format('昭和50年1月2日', 'YMMDD'), '19750102');
+eq(format('S50 1 2', 'YMMDD'), '19750102');

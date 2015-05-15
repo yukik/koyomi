@@ -21,6 +21,9 @@
 <body>
   <script>
     (function () {
+
+      var koyomi = new Koyomi();
+
       // URLより表示年を取得 (取得できない場合は今年)
       var search = decodeURIComponent(location.search);
       var range = /^\?\d{1,4}$/.test(search) ? search.slice(1) : new Date().getFullYear();
@@ -28,32 +31,32 @@
       // 必ず全てゴースト日になる列を省略するための最大値
       var max = 31 + 6;
 
-      // 週の並び (6週分)
-      var weeks = new Array(6+1).join('日月火水木金土').split('').slice(0, max);
+      var week = '日,月,火,水,木,金,土,';
+      // var week = 'Sun,Mon,Tue,Wed,Thu,Fri,Sat,';  // 英語ヘッダー
+      // var week = '月,火,水,木,金,土,日,';         // 月曜初め
+
+      // 週の並び (max分)
+      var weeks = new Array(6+1).join(week).split(',').slice(0, max);
 
       // 曜日ヘッダの作成
       var head = Koyomi.getWeekIndex(weeks).map(function(x, i){
-            x =  x * 1;
-            var name = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
-            return '<th class="' + name + '">' + weeks[i] + '</th>';
+            var c = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
+            return '<th class="' + c + '">' + weeks[i] + '</th>';
           }).slice(0, max).join('');
-
-      //カレンダーデータの取得
-      var koyomi = new Koyomi();
-      var data = koyomi.getCalendarData(range, weeks[0], true);
 
       // html作成
       var html = '<table>';
       html += '<caption>' +
               '<a href="?' + (range * 1 - 1) + '">&#x226A;</a>' +
               '&nbsp;&nbsp;&nbsp;' + range + '年&nbsp;&nbsp;&nbsp;' +
-              '&nbsp;&nbsp;&nbsp;' + koyomi.format(range + '-1-1', 'nengonen2') + '年&nbsp;&nbsp;&nbsp;' +
+              '&nbsp;&nbsp;&nbsp;' + koyomi.format(range + '-1-1', 'GGN') + '年&nbsp;&nbsp;&nbsp;' +
               '<a href="?' + (range * 1 + 1) + '">&#x226B;</a>' +
               '</caption>\n';
       html += '<tr><th></th>' + head + '</tr>\n';
       var cut = 0;
 
-      data.forEach(function(day) {
+      //カレンダーデータ
+      koyomi.getCalendarData(range, weeks[0]).forEach(function(day) {
 
         // 月初
         if (day.som) {

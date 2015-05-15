@@ -56,5 +56,18 @@ Koyomiに設定されている祝日は、1948年7月20日に施行された祝�
       + 営業日の計算。`koyomi.addEigyobi('2015-5-5', 3)` &#x226B; `new Date('2015-5-11')`
       + 営業日数。`koyomi.countEigyobi('2015-1-1', '2015-12-31')` &#x226B; `242`
 
-続きは[README2.md](./README2.md)を参照してください
+このほかにも多くの機能を利用することができます  
+詳しくは下記のドキュメントを参照してください
 
+# その他のドキュメント
+
+
+  + [インスタンスの作成 ./doc/instance.md](./dics/instance.md)
+  + [日時の情報取得・操作 ./doc/calc-date.md](./docs/calc-date.md)
+  + [カレンダー情報 ./doc/calendar.md](./docs/calendar.md)
+  + [営業日計算 ./doc/eigyobi.md](./docs/eigyobi.md)
+  + [フォーマット ./doc/format.md](./docs/format.md)
+  + [補助関数 ./doc/helper.md](./docs/helper.md)
+  + [年度 ./doc/helper.md](./docs/nendo.md)
+  + [祝日 ./doc/holiday.md](./docs/holiday.md)
+  + [営業日・休業日 ./doc/open-close.md](./docs/open-close.md)

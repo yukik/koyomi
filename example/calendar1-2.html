@@ -38,19 +38,8 @@
 
   <script>
     (function () {
-
       var koyomi = new Koyomi();
-
-      // 仮のイベントや強制的な営業日や休業日の設定
-      for(var i = 1; i < 11; i++) {
-        var d = Koyomi.add(new Date(), i + '日');
-        if (i % 2 === 0) {
-          koyomi.open(d);
-        } else {
-          koyomi.close(d);
-        }
-        koyomi.addEvent(d, 'イベントあります');
-      }
+      var html = '';
 
       // URLより表示範囲を取得 (取得できない場合は今年)
       var search = decodeURIComponent(location.search);
@@ -62,22 +51,14 @@
       // var weeks = 'Sun,Mon,Tue,Wed,Thu,Fri,Sat'.split(','); // 英語ヘッダー
       // var weeks = '月火水木金土日'.split('');  // 週初めを月曜にする場合
 
-      // 月の行数を6行に固定する場合はtrue
-      var six = true;
-
       // 曜日ヘッダの作成
       var head = Koyomi.getWeekIndex(weeks).map(function(x, i){
-            x =  x * 1;
-            var name = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
-            return '<th class="' + name + '">' + weeks[i] + '</th>';
+            var c = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
+            return '<th class="' + c + '">' + weeks[i] + '</th>';
           }).join('');
 
-      // カレンダーデータの取得
-      var data = koyomi.getCalendarData(range, weeks[0], six);
-
-      // html作成
-      var html = '';
-      data.forEach(function(day) {
+      // カレンダーデータ
+      koyomi.getCalendarData(range, weeks[0]).forEach(function(day) {
 
         // 月初
         if (day.som) {
@@ -96,9 +77,6 @@
                         title          ? 'holiday' :
                         day.week === 0 ? 'sun'     :
                         day.week === 6 ? 'sat'     : 'weekday';
-        if (day.events.length) {
-          title = (title ? title + '\n' : '') + day.events.join('\n');
-        }
         if (title) {
           html += '<td class="' + className + '" title="' + title + '">' + day.day + '</td>';
         } else {

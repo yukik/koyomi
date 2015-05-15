@@ -55,9 +55,8 @@ Koyomi.isLeap(2016); // true
 所属する単位の先頭の値を返します  
 使用できる単位はaddの時と同じです  
 このメソッドはクラスメソッドとインスタンスメソッドで動作が異なります  
-年を指定した時は、クラスメソッドが年始の1月1日を返すのに対し、インスタンスメソッドは年度の初め(プロパティstartMonth)を返します  
-週を指定した時は、クラスメソッドは月曜日を返すのに対し、インスタンスメソッドは週の初め(プロパティtartWeek)を返します
-(クラスメソッドはconfig.jsのSTART_MONTH, START_WEEKに依存しています)
+年を指定した時は、クラスメソッドが年始の1月1日(CONFIG.START_MONTH依存)を返すのに対し、インスタンスメソッドは年度の初め(プロパティstartMonth)を返します  
+週を指定した時は、クラスメソッドは月曜日(CONFIG.START_WEEK依存)を返すのに対し、インスタンスメソッドは週の初め(koyomi.startWeek)を返します
 
 `{Date} Koyomi.start({Date|String} date, {String} grid)`
 
@@ -70,9 +69,8 @@ Koyomi.start('2015-4-20', '月'); // 2015-4-1
 所属する単位の最後の値を返します  
 使用できる単位はaddの時と同じです  
 このメソッドはクラスメソッドとインスタンスメソッドで動作が異なります  
-年を指定した時は、クラスメソッドが年末の12月31日を返すのに対し、インスタンスメソッドは年度の終り(プロパティstartMonthに依存)を返します  
-週を指定した時は、クラスメソッドは日曜日を返すのに対し、インスタンスメソッドは週の最後(プロパティtartWeek依存)を返します  
-(クラスメソッドはconfig.jsのSTART_MONTH, START_WEEKに依存しています)
+年を指定した時は、クラスメソッドが年末の12月31日(CONFIG.START_MONTH依存)を返すのに対し、インスタンスメソッドは年度の終り(koyomi.startMonthに依存)を返します  
+週を指定した時は、クラスメソッドは日曜日(CONFIG.START_WEEK依存)を返すのに対し、インスタンスメソッドは週の最後(koyomi.startWeek依存)を返します  
 
 `{Date} Koyomi.end({Date|String} date, {String} grid)`
 
@@ -116,12 +114,13 @@ Koyomi.diffSeconds('2015-1-5 12:12:10:', '2015-1-5 12:12:35') // 20
 
 # yearDays
 
-年の日数を返します
+年の日数を返します  
+年は始まりを1月1日とします(CONFIG.START_MONTHに依存)
 
 `{Number} Koyomi.yearDays({Date|String} date)`
 
 ```
-Koyomi.yearDays('2015-1-10') // 365
+Koyomi.yearDays('2015-2-10') // 365
 ```
 
 # monthDays
@@ -131,31 +130,52 @@ Koyomi.yearDays('2015-1-10') // 365
 `{Number} Koyomi.monthDays({Date|String} date)`
 
 ```
-Koyomi.monthDays('2015-1-10') // 31
+Koyomi.monthDays('2015-2-10') // 28
 ```
 
 # passYearDays
 
-年初の経過日数を返します
+年の初めからの経過日数を返します  
+指定日を含みます  
+年は初めを1月1日とします(CONFIG.START_MONTHに依存)
 
-`{Number} Koyomi.yearDays({Date|String} date)`
+`{Number} Koyomi.passYearDays({Date|String} date)`
 
 ```
-Koyomi.yearDays('2015-1-10') // 365
+Koyomi.passYearDays('2015-2-10') // 41
 ```
-
 
 # passDays
 
+月の初めからの経過日数を返します  
+指定日を含みます
 
+`{Number} Koyomi.passDays({Date|String} date)`
+
+```
+Koyomi.passDays('2015-2-10') // 10
+```
 
 
 # remainYearDays
 
+年の終わりまでの残日数を返します  
+指定日を含みます  
+年は終わりを12月31日とします(CONFIG.START_MONTHに依存)
 
+`{Number} Koyomi.remainYearDays({Date|String} date)`
 
+```
+Koyomi.remainYearDays('2015-2-10') // 322
+```
 
 # remainDays
 
+月の終わりまでの残日数を返します  
+指定日を含みます
 
+`{Number} Koyomi.remainDays({Date|String} date)`
 
+```
+Koyomi.remainDays('2015-2-10') // 19
+```

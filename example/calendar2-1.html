@@ -21,30 +21,28 @@
 <body>
   <script>
     (function () {
+      var koyomi = new Koyomi({startMonth: 4, startWeek: '日'});
+
       // 必ず全てゴースト日になる列を省略するための最大値
       var max = 31 + 6;
 
-      // 週の並び (6週分)
+      // 週の並び (max分)
       var weeks = new Array(6+1).join('日月火水木金土').split('').slice(0, max);
 
       // 曜日ヘッダの作成
       var head = Koyomi.getWeekIndex(weeks).map(function(x, i){
-            x =  x * 1;
-            var name = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
-            return '<th class="' + name + '">' + weeks[i] + '</th>';
+            var c = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
+            return '<th class="' + c + '">' + weeks[i] + '</th>';
           }).slice(0, max).join('');
-
-      //カレンダーデータの取得
-      var koyomi = new Koyomi({startMonth: 4, startWeek: '日'});
-      var data = koyomi.getCalendarData();
 
       // html作成
       var html = '<table>';
-      html += '<caption>' + koyomi.formatNendo(null, 'nengonen年度 (Y/n', '-Y/n)') + '</caption>';
+      html += '<caption>' + koyomi.formatNendo(null, 'GGN年度 (Y/M', '-Y/M)') + '</caption>';
       html += '<tr><th></th>' + head + '</tr>\n';
       var cut = 0;
 
-      data.forEach(function(day) {
+      //カレンダーデータ
+      koyomi.getCalendarData().forEach(function(day) {
 
         // 月初
         if (day.som) {
