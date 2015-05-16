@@ -1,7 +1,8 @@
 # 年度
 
-年度とは、
-
+年度とは、特定の目的のために規定された1年間の区切り方です  
+日本での会計年度は4月に始まり3月末に終わるため、年度を基準とした計算が便利なことが多くなります  
+年度のメソッドはいずれもインスタンスメソッドです
 
 ## getNendo
 
@@ -13,7 +14,7 @@
   + `date`が含まれる期間の年度を検出します
   + 省略した場合は、本日を対象にします
   + 戻り値のオブジェクトは次の形式
-  + `{from: Dateオブジェクト, to: Dateオブジェクト}`
+      + `{from: Dateオブジェクト, to: Dateオブジェクト}`
 
 
 ## formatNendo
@@ -26,44 +27,28 @@
   + 省略した場合は、本年度を対象にします
   + `fromFormat`と`toFormat`で整形された文字を結合して返します
   + `reverse`を`true`にした場合は結合の順を逆にします
-  + `fromFormat`の既定値は`'Y/M'`、`toFormat`の規定値は`'-Y/M'`です
-  + ただし、`fromFormat`が設定された場合は`toFormat`の規定値は`null`です
+  + `fromFormat`の既定値は`'Y/M'`、`toFormat`の既定値は`'-Y/M'`です
+  + ただし、`fromFormat`が設定された場合は`toFormat`の既定値は`null`です
   + 4月初めの年度では、`koyomi.formatNendo('2015-3-5')`は`'2014/4-2015/3'`と返されます
 
 
 ## nendoDays
 
-年度の総日数
+年度の総日数を返します
+
+`{Number} koyomi.nendoDays({Date|String} date)`
 
 
 ## passNendoDays
 
-年度始めからの経過日数
+年度始めからの経過日数を返します
+
+`{Number} koyomi.passNendoDays({Date|String} date)`
 
 
 ## remainNendoDays
 
-年度末まで残りの日数
+年度末まで残りの日数を返します
 
-
-## separate
-
-期間をブロックごとに分割(年度、月、日)します
-(時以下は切り捨てられます)
-
-```
-{
-  days: {from: from, to: to},
-}
-
-{
-  remainDays:  from,
-  fromMonths: {date: date, times: times},
-  nendo     : {date: date, times: times},
-  toMonths  : {date: date, times: times},
-  passDays  :  to
-}
-```
-
-
+`{Number} koyomi.remainNendoDays({Date|String} date)`
 

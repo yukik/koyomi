@@ -1,62 +1,67 @@
-# カレンダーデータの取得
+# カレンダー
+
+カレンダーは暦の最も代表的なインターフェースであるため、サポートするメソッドが用意されています  
+いずれもインスタンスからのみ利用できます
+
+
+## カレンダーデータの取得
 
 `{Array} koyomi.getCalendarData({String|Number} range, {String} startWeek, {Boolean} six);`
 
 カレンダーデータを簡単に作成することのできるメソッドが用意されています  
-一般的なカレンダーをDOMの動的作成する際に、通常次のような処理が必要です
+一般的なカレンダーをテーブルタグで動的作成する際に、通常次のような処理が必要です
 
   1. 曜日の始まりを決め、1日より前に幾つの空マスを用意しなければならないか計算
-  2. 週の終わりを検査し、次の行にするための判定を行う
+  2. 週の終わりを計算し、次の行にするための判定を行う
   3. 末日から週の終わりまで幾つの空マスで埋めるかを計算
   4. 複数月を処理する場合は、データを何度も取得し、上記を行う
 
-これらを複雑な処理をViewコードで行う必要はありません  
+しかし、先のメソッドを使用すると、これらを複雑な処理をViewコードで行う必要はありません  
 
-## データ
+### データ
 
 次のようなデータを取得することができます
 
 ```
-koyomi.getCalendarData('2015/1', 'sun', 'true')
+koyomi.getCalendarData('2015/4-2015/6') ->
 [
-  { som: true , eom: false, sow: true , eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 28, week: 0, opened: false, closed: '定休日', holiday: ''        , weekNumber: 1, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 29, week: 1, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 30, week: 2, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2014, month: 12, day: 31, week: 3, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: false, block: '2015/01', year: 2015, month: 1 , day: 1 , week: 4, opened: false, closed: '祝日'  , holiday: '元日'    , weekNumber: 1, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: false, block: '2015/01', year: 2015, month: 1 , day: 2 , week: 5, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
-  { som: false, eom: false, sow: false, eow: true , ghost: false, block: '2015/01', year: 2015, month: 1 , day: 3 , week: 6, opened: false, closed: '休業日', holiday: ''        , weekNumber: 1, events: []},
-                (中略)
-  { som: false, eom: false, sow: false, eow: false, ghost: false, block: '2015/01', year: 2015, month: 1 , day: 29, week: 4, opened: true , closed: ''      , holiday: ''        , weekNumber: 5, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: false, block: '2015/01', year: 2015, month: 1 , day: 30, week: 5, opened: true , closed: ''      , holiday: ''        , weekNumber: 5, events: []},
-  { som: false, eom: false, sow: false, eow: true , ghost: false, block: '2015/01', year: 2015, month: 1 , day: 31, week: 6, opened: false, closed: '定休日', holiday: ''        , weekNumber: 5, events: []},
-  { som: false, eom: false, sow: true , eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 1 , week: 0, opened: false, closed: '定休日', holiday: ''        , weekNumber: 6, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 2 , week: 1, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 3 , week: 2, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 4 , week: 3, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 5 , week: 4, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
-  { som: false, eom: false, sow: false, eow: false, ghost: true , block: '2015/01', year: 2015, month: 2 , day: 6 , week: 5, opened: true , closed: ''      , holiday: ''        , weekNumber: 6, events: []},
-  { som: false, eom: true , sow: false, eow: true , ghost: true , block: '2015/01', year: 2015, month: 2 , day: 7 , week: 6, opened: false, closed: '定休日', holiday: ''        , weekNumber: 6, events: []},
-]);
+  {block: '2015/04', som: true,  eom: false, sow: true,  eow: false, year: 2015, month: 3, day: 30, week: 1, weekNumber:  1, opened: true , closed: ''      , holiday: '', events: [], ghost: true },
+  {block: '2015/04', som: false, eom: false, sow: false, eow: false, year: 2015, month: 3, day: 31, week: 2, weekNumber:  1, opened: true , closed: ''      , holiday: '', events: [], ghost: true },
+  {block: '2015/04', som: false, eom: false, sow: false, eow: false, year: 2015, month: 4, day:  1, week: 3, weekNumber:  1, opened: true , closed: ''      , holiday: '', events: [], ghost: false},
+  {block: '2015/04', som: false, eom: false, sow: false, eow: false, year: 2015, month: 4, day:  2, week: 4, weekNumber:  1, opened: true , closed: ''      , holiday: '', events: [], ghost: false},
+  {block: '2015/04', som: false, eom: false, sow: false, eow: false, year: 2015, month: 4, day:  3, week: 5, weekNumber:  1, opened: true , closed: ''      , holiday: '', events: [], ghost: false},
+    // (中略)
+  {block: '2015/06', som: false, eom: false, sow: false, eow: true,  year: 2015, month: 6, day: 28, week: 0, weekNumber: 13, opened: false, closed: '定休日', holiday: '', events: [], ghost: false},
+  {block: '2015/06', som: false, eom: false, sow: true,  eow: false, year: 2015, month: 6, day: 29, week: 1, weekNumber: 14, opened: true , closed: ''      , holiday: '', events: [], ghost: false},
+  {block: '2015/06', som: false, eom: false, sow: false, eow: false, year: 2015, month: 6, day: 30, week: 2, weekNumber: 14, opened: true , closed: ''      , holiday: '', events: [], ghost: false},
+  {block: '2015/06', som: false, eom: false, sow: false, eow: false, year: 2015, month: 7, day:  1, week: 3, weekNumber: 14, opened: true , closed: ''      , holiday: '', events: [], ghost: true },
+  {block: '2015/06', som: false, eom: false, sow: false, eow: false, year: 2015, month: 7, day:  2, week: 4, weekNumber: 14, opened: true , closed: ''      , holiday: '', events: [], ghost: true },
+  {block: '2015/06', som: false, eom: false, sow: false, eow: false, year: 2015, month: 7, day:  3, week: 5, weekNumber: 14, opened: true , closed: ''      , holiday: '', events: [], ghost: true },
+    // (中略) 
+  {block: '2015/06', som: false, eom: false, sow: false, eow: false, year: 2015, month: 7, day: 10, week: 5, weekNumber: 15, opened: true , closed: ''      , holiday: '', events: [], ghost: true },
+  {block: '2015/06', som: false, eom: false, sow: false, eow: false, year: 2015, month: 7, day: 11, week: 6, weekNumber: 15, opened: false, closed: '定休日', holiday: '', events: [], ghost: true },
+  {block: '2015/06', som: false, eom: true,  sow: false, eow: true,  year: 2015, month: 7, day: 12, week: 0, weekNumber: 15, opened: false, closed: '定休日', holiday: '', events: [], ghost: true }
+]
 ```
 
-最初の行のデータは4/26のもので、最後の行のデータは6/6のものです  
+最初の行のデータは3/30のもので、最後の行のデータは7/12のものです  
 引数で指定した月以外の日データも含まれてますが、これで正常な動作です  
 この指定した月以外の日をゴースト日と呼びます  
  (カレンダーでは通常、薄いグレーなど影を薄くするためゴースト日と命名しました。造語です。)  
 このデータを利用すると先の1-4は次のように行います
 
-  1. 最初の要素から表示する。その際、ghost=trueは前月の日付なので目立たないように表示する
-  2. sow=trueは週の初めを、eow=trueは週の終わりを示すので、TRタグなどで行を示す
-  3. 月末後もそのまま要素を表示する。その際ghost=trueは次月の日付なので目立たないように表示する
-  4. 複数月の場合は、som=trueは新しい月の最初のデータ、eom=trueは月の最後のデータとして扱う
+  1. 最初の要素から表示する。その際、ghost=trueは前月なので目立たないように表示する
+  2. sow=trueは週の初めを、eow=trueは週の終わりを示すので、TRタグでくくる
+  3. 月末後もそのまま要素を表示する。その際ghost=trueは次月なので目立たないように表示する
+  4. 複数月の場合は、som=true・eom=trueがそれぞれ月の初めと最後のデータとして扱う
 
 このように、カレンダーを作成するための情報が揃っています  
 Viewコードではデザインだけに集中することができます
 
-具体的なViewコードは、[example/calendar.html](../example/calendar.html)を確認してください  
+具体的なViewコードは、[../example/calendar/calendar1-1.html](../example/calendar/calendar1-1.html)を確認してください  
 非常にすっきりとしたViewコードであることが確認できます  
-これであれば、もっと複雑な処理（カレンダーを値の入力に使用する・予定を表示させるなど）を追加することが容易になります
+これであれば、もっと複雑な処理（カレンダーを値の入力に使用する・予定を表示させるなど）を追加することが容易になります  
+例えば、月曜始まりのカレンダーを日曜始まりに変更するには、実施一行だけ変更すれば実現できます
 
 ### 引数の説明
 
@@ -66,12 +71,12 @@ Viewコードではデザインだけに集中することができます
           + 年を指定して1月から12月まで取得    2015, '2016'など
           + 月を指定 '2015/4', '2015/10'など
           + 期間を指定 '2015/4-2016/3'など
-      + 指定しなかった場合は、プロパティの`startMonth`に設定された月から、本日が含まれる年度の期間になります
+      + 指定しなかった場合は、本日が含まれる年度の期間になります(プロパティの`startMonth`に依存)
   + startWeek
       + 開始曜日を指定します 
       + 指定しなかった場合はインスタンスのプロパティ`startWeek`です
       + '月', '日'や'Mon', 'sunday' など大文字小文字問わず英語も指定できます
-      + nullを設定しないかぎり、ゴースト日のデータが追加され、sow/eow/ghost/block/weekNumberのプロパティが追加されます
+      + nullを指定した場合は、ゴースト日のデータ、sow/eow/ghost/block/weekNumberのプロパティは追加されません
   + six
       + 6週分までゴースト日を追加します
       + 指定しなかった場合は、プロパティの`six`に設定された値です
@@ -121,15 +126,6 @@ Viewコードではデザインだけに集中することができます
   + events
     + イベント
     + `koyomi.addEvents`で追加されたイベントです
-
-カレンダー作成時に`getCalendarDate`を利用することは大きな利点があります
-
-  + Viewコードがすっきりする
-  + 日曜始まりから月曜始まりの修正は、ほぼ一箇所だけで簡単に済むようになる
-  + 祝日名、営業中などの情報が含まれている
-  + 複数の月データを簡単に処理できる
-  + [exapmle/calendar1-1.html](../example/calendar1-1.html)を参考にしてください
-
 
 # 週番号の取得
 

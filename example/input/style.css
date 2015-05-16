@@ -1,0 +1,52 @@
+#koyomiCalendar {
+  font-size: 70%;
+}
+#koyomiCalendar caption {
+  font-size: 150%;
+}
+#koyomiCalendar .prev {
+  float: left;
+}
+#koyomiCalendar .next {
+  float: right;
+}
+#koyomiCalendar th {
+  background: #d3ffa8;
+  text-align: center;
+  padding:1px;
+  width:10px;
+}
+#koyomiCalendar td {
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  text-align: center;
+  padding:1px;
+}
+#koyomiCalendar .day {
+  cursor: pointer;
+}
+#koyomiCalendar .weekday {
+  color: #6a1917;
+}
+#koyomiCalendar .sat     {
+  color: #7fbfff;
+}
+#koyomiCalendar .sun     {
+  color: #ff7f7f;
+}
+#koyomiCalendar .holiday {
+  color: #ff7f7f;
+  background: #ffe5e5;
+}
+#koyomiCalendar .ghost   {
+  color: #dcdcdc;
+}
+#koyomiCalendar td:hover {
+  background: #fff;
+}
+#koyomiCalendar td.holiday:hover {
+  background: #fcc;
+}
+#koyomiCalendar .close {
+  cursor: pointer;
+}

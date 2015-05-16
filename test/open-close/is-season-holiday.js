@@ -1,4 +1,3 @@
-
 // 定休日判別
 var Koyomi = require('../..');
 var koyomi = new Koyomi();

@@ -4,10 +4,34 @@ var koyomi = new Koyomi();
 var remain = koyomi.remainEigyobi.bind(koyomi);
 var eq = require('assert').equal;
 
-
-koyomi.startMonth = 4;
-
-console.log(remain('2015-4-7'));
-
-
-console.log('remain-eigyobi 作成中');
+eq(remain(20150501), 18);
+eq(remain(20150502), 17);
+eq(remain(20150503), 17);
+eq(remain(20150504), 17);
+eq(remain(20150505), 17);
+eq(remain(20150506), 17);
+eq(remain(20150507), 17);
+eq(remain(20150508), 16);
+eq(remain(20150509), 15);
+eq(remain(20150510), 15);
+eq(remain(20150511), 15);
+eq(remain(20150512), 14);
+eq(remain(20150513), 13);
+eq(remain(20150514), 12);
+eq(remain(20150515), 11);
+eq(remain(20150516), 10);
+eq(remain(20150517), 10);
+eq(remain(20150518), 10);
+eq(remain(20150519),  9);
+eq(remain(20150520),  8);
+eq(remain(20150521),  7);
+eq(remain(20150522),  6);
+eq(remain(20150523),  5);
+eq(remain(20150524),  5);
+eq(remain(20150525),  5);
+eq(remain(20150526),  4);
+eq(remain(20150527),  3);
+eq(remain(20150528),  2);
+eq(remain(20150529),  1);
+eq(remain(20150530),  0);
+eq(remain(20150531),  0);

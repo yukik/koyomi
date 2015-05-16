@@ -6,7 +6,8 @@ Dateオブジェクトを作成します。
 
 `{Date} Koyomi.toDate({Date|String|Array|Number|Object} date, {Boolean} trim)`
 
-dateは次の4つの方法で指定できます
+dateは次の5つの方法で指定できます  
+省略した場合は、nullが返されます(Dateは現在日時なので間違えないように)
 
   + Dateオブジェクト
   + 文字列
@@ -17,9 +18,9 @@ dateは次の4つの方法で指定できます
       + 月以降省略した場合は、その部で最初の数値が適用されます
       + 1月は1です
   + 数字
-      + YMMDDHHmmssの形式とみなす
-      + Yは4桁分取得します
+      + Y>4MMDDHHmmssの形式とみなす
       + MM以下は省略することができます
+      + 西暦1000年未満の日時は数字ではしていできません
   + オブジェクト
       + year, month, day, hours, minutes, seconds等のプロパティを持つ必要があります
       + 使用できるプロパティの一覧は次のとおりです

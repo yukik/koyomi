@@ -35,9 +35,9 @@ test(to('2015-01-02', 1), '2015-01-01');
 test(to('2015-01-03', 1), '2015-01-02');
 test(to('2015-01-04', 1), '2015-01-03');
 test(to('2015-01-11', 1), '2015-01-10');
-koyomi.holidayOpened =  false;      // 規定値に戻す
-koyomi.regularHoliday = '土, 日';   // 規定値に戻す
-koyomi.seasonHoliday = '12/29-1/3'; // 規定値に戻す
+koyomi.holidayOpened =  false;      // 既定値に戻す
+koyomi.regularHoliday = '土, 日';   // 既定値に戻す
+koyomi.seasonHoliday = '12/29-1/3'; // 既定値に戻す
 
 
 // season
@@ -53,7 +53,7 @@ koyomi.seasonHoliday = '12/29-1/6, 1/8';
 test(to('2015-01-01', 1), '2014-12-25');
 koyomi.seasonHoliday = '1/1-12/31';
 test(to('2015-01-01', 1), null); // 全休
-koyomi.seasonHoliday = '12/29-1/3'; // 規定値に戻す
+koyomi.seasonHoliday = '12/29-1/3'; // 既定値に戻す
 
 // regular
 koyomi.regularHoliday = '土,日';

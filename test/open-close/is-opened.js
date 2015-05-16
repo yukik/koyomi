@@ -1,5 +1,4 @@
-
-// 営業日判定
+// 営業判別
 var Koyomi = require('../..');
 var koyomi = new Koyomi();
 var isOpened = koyomi.isOpened.bind(koyomi);

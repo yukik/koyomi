@@ -10,6 +10,9 @@ var y = today.getFullYear();
 var m = today.getMonth();
 var d = today.getDate();
 
+
+eq(toDate(), null);
+
 eq(toDate(new Date(2015, 4, 1)), new Date(2015, 4, 1));
 eq(toDate('2015-5-1')          , new Date(2015, 4, 1));
 eq(toDate('H27-5-1')           , new Date(2015, 4, 1));

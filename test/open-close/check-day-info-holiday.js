@@ -1,4 +1,4 @@
-// 個別営業日・休業日設定
+// 個別営業・休業設定
 
 var Koyomi = require('../..');
 var koyomi = new Koyomi();

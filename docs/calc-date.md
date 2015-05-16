@@ -61,7 +61,7 @@ Koyomi.isLeap(2016); // true
 `{Date} Koyomi.start({Date|String} date, {String} grid)`
 
 ```
-Koyomi.start('2015-4-20', '月'); // 2015-4-1
+Koyomi.start('2015-4-20', '月'); // 2015-4-1 00:00:00
 ```
 
 # end
@@ -69,8 +69,8 @@ Koyomi.start('2015-4-20', '月'); // 2015-4-1
 所属する単位の最後の値を返します  
 使用できる単位はaddの時と同じです  
 このメソッドはクラスメソッドとインスタンスメソッドで動作が異なります  
-年を指定した時は、クラスメソッドが年末の12月31日(CONFIG.START_MONTH依存)を返すのに対し、インスタンスメソッドは年度の終り(koyomi.startMonthに依存)を返します  
-週を指定した時は、クラスメソッドは日曜日(CONFIG.START_WEEK依存)を返すのに対し、インスタンスメソッドは週の最後(koyomi.startWeek依存)を返します  
+年を指定した時は、クラスメソッドが年末の12月31日の23:59:59(CONFIG.START_MONTH依存)を返すのに対し、インスタンスメソッドは年度の終りの23:59:59(koyomi.startMonthに依存)を返します  
+週を指定した時は、クラスメソッドは日曜日の23:59:59(CONFIG.START_WEEK依存)を返すのに対し、インスタンスメソッドは週の最後の23:59:59(koyomi.startWeek依存)を返します  
 
 `{Date} Koyomi.end({Date|String} date, {String} grid)`
 

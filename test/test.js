@@ -1,6 +1,5 @@
 // test all
 
-
 // calc-date
 require('./calc-date/add');
 require('./calc-date/diff-seconds');
@@ -14,6 +13,7 @@ require('./calc-date/start-instance');
 // calendar
 require('./calendar/events');
 require('./calendar/get-cal-data');
+require('./calendar/get-cal-data2');
 require('./calendar/get-week-number-instance');
 
 // day-info

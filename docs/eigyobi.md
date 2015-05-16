@@ -1,5 +1,9 @@
 # 営業日計算
 
+営業日の計算は複雑になりやすいですが、Koyomiでは標準で用意されています  
+いずれのメソッドもインスタンスからのみ利用することができます  
+また、一度計算した営業日はキャッシュされるため、長期間の営業日の計算を繰り返し行っても
+処理時間がかかることはありません
 
 ## addEigyobi
 
@@ -40,43 +44,55 @@
 
 ## countEigyobi
 
-営業日数を数えることができる関数が定義されています  
+指定した期間の営業日数を返します
 
 `{Number} koyomi.countEigyobi({Date|String} from, {Date|String} to)`
-
-  + from
-    + 開始日
-    + 必須です
-  + to
-    + 終了日
-    + 必須です
-
-
-## passEigyobi
-
-月初から経過した営業日数
-
-
-## passNendoEigyobi
-
-年度開始から経過した営業日数
-
-
-## remainEigyobi
-
-月末までの残りの営業日数
-
-
-## remainNendoEigyobi
-
-年度末までの残りの営業日数
-
-
-## monthEigyobi
-
-月の営業日数
 
 
 ## nendoEigyobi
 
-年度の営業日数
+年度の営業日数を返します  
+引数には年度が含まれる日付を指定します
+
+`{Number} koyomi.nendoEigyobi({Date|String} date)`
+
+
+## monthEigyobi
+
+月の営業日数を返します  
+引数にはその月に含まれる日付を指定します
+
+`{Number} koyomi.monthEigyobi({Date|String} date)`
+
+
+## passNendoEigyobi
+
+年度開始から経過した営業日数を返します  
+引数には年度が含まれる日付を指定します
+
+`{Number} koyomi.passNendoEigyobi({Date|String} date)`
+
+
+## passEigyobi
+
+月初から経過した営業日数を返します  
+引数にはその月に含まれる日付を指定します
+
+`{Number} koyomi.passEigyobi({Date|String} date)`
+
+
+## remainNendoEigyobi
+
+年度末までの残りの営業日数を返します  
+引数には年度が含まれる日付を指定します
+
+`{Number} koyomi.remainNendoEigyobi({Date|String} date)`
+
+
+## remainEigyobi
+
+月末までの残りの営業日数を返します  
+引数にはその月に含まれる日付を指定します
+
+`{Number} koyomi.remainEigyobi({Date|String} date)`
+
