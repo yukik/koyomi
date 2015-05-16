@@ -59,15 +59,14 @@ Koyomiに設定されている祝日は、1948年7月20日に施行された祝�
 このほかにも多くの機能を利用することができます  
 詳しくは下記のドキュメントを参照してください
 
-# その他のドキュメント
-
+# ドキュメント
 
   + [インスタンスの作成 ./docs/instance.md](./docs/instance.md)
-  + [日時の情報取得・操作 ./docs/calc-date.md](./docs/calc-date.md)
-  + [カレンダー情報 ./docs/calendar.md](./docs/calendar.md)
-  + [営業日計算 ./docs/eigyobi.md](./docs/eigyobi.md)
   + [フォーマット ./docs/format.md](./docs/format.md)
-  + [補助関数 ./docs/helper.md](./docs/helper.md)
+  + [日時の情報取得・操作 ./docs/calc-date.md](./docs/calc-date.md)
+  + [営業日計算 ./docs/eigyobi.md](./docs/eigyobi.md)
+  + [カレンダー情報 ./docs/calendar.md](./docs/calendar.md)
   + [年度 ./docs/helper.md](./docs/nendo.md)
   + [祝日 ./docs/holiday.md](./docs/holiday.md)
-  + [営業日・休業日 ./docs/open-close.md](./docs/open-close.md)
+  + [営業・休業 ./docs/open-close.md](./docs/open-close.md)
+  + [補助関数 ./docs/helper.md](./docs/helper.md)
