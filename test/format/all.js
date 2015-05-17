@@ -26,7 +26,6 @@ require('./Y');  // 年
 require('./Z');  // タイムゾーン
 
 require('./combi');
-require('./eigyobi');
 require('./escape');
 require('./josu');
 require('./options');
