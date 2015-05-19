@@ -5,7 +5,7 @@ var format = koyomi.format.bind(koyomi);
 var eq = require('assert').equal;
 
 // 週番号
-// R Rj Rx
+// R Rj Rx Ri
 
 eq(format(201501, 'R'),  '1');
 eq(format(201502, 'R'),  '5');
@@ -47,6 +47,21 @@ eq(format(201509, 'Rx'), '36');
 eq(format(201510, 'Rx'), '40');
 eq(format(201511, 'Rx'), '44');
 eq(format(201512, 'Rx'), '49');
+
+
+eq(format(201501, 'Ri'),  '1');
+eq(format(201502, 'Ri'),  '5');
+eq(format(201503, 'Ri'),  '9');
+eq(format(201504, 'Ri'), '14');
+eq(format(201505, 'Ri'), '18');
+eq(format(201506, 'Ri'), '23');
+eq(format(201507, 'Ri'), '27');
+eq(format(201508, 'Ri'), '31');
+eq(format(201509, 'Ri'), '36');
+eq(format(201510, 'Ri'), '40');
+eq(format(201511, 'Ri'), '44');
+eq(format(201512, 'Ri'), '49');
+
 
 koyomi.startMonth = 9;
 koyomi.startWeek = '日';

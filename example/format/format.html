@@ -6,8 +6,6 @@
   <script type="text/javascript" src="../../public/koyomi.min.js"></script>
   <style type='text/css'>
     * {color: #6a1917;}
-    ul {width: 600px; margin:0;}
-    li {display:block; float: left; width: 200px;}
     dl {width:600px;}
     dt {width:160px;float:left;padding:10px;border-bottom:1px solid #ccc;}
     dd {margin-left:180px;padding:10px;border-bottom:1px solid #ccc;}
@@ -21,6 +19,7 @@
         html += '<dt><input value="' + key + '" />&nbsp;&nbsp;&nbsp;&#x226B;</dt><dd><span></span>&nbsp;</dd>';
       });
       document.getElementById('list').innerHTML = html;
+      document.getElementById('val').value = Koyomi.format(new Date(), 'Y-M-D H:mm:ss');
       update();
     }
 
@@ -41,7 +40,7 @@
 <body onKeyup="update();" onLoad="onLoad();">
 
   <dl>
-    <dt><input type="text" value="2015-5-7 12:34:56" id="val" /></dt><dd><span></span>&nbsp;</dd>
+    <dt><input type="text" id="val" /></dt><dd><span></span>&nbsp;</dd>
   </dl>
 
   <dl id="list"></dl>

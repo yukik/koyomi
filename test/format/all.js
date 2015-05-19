@@ -25,6 +25,7 @@ require('./W');  // 曜日
 require('./Y');  // 年
 require('./Z');  // タイムゾーン
 
+require('./custom');
 require('./combi');
 require('./escape');
 require('./josu');

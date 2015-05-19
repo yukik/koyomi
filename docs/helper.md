@@ -44,7 +44,7 @@ trimは切り捨てします
   + このメソッドは、他のメソッドの引数で`{Date|String} date`となっているものすべてで利用されます
   + そのため、他のメソッドでも和暦の入力や配列での入力を受け付けることができます
 
-## getDataArray
+## getDateArray
 
 文字列を日付の配列に変更します
 
@@ -69,7 +69,7 @@ trimは切り捨てします
 
 日曜を0、土曜を6とするインデックスを文字列から取得します
 
-`{String|Array} Koyomi.getWeekIndex({String|Array})`
+`{String|Array} Koyomi.getWeekIndex({String|Array} value)`
 
   + 受け付ける文字は、以下のとおり
       + `'日'`,`'月'`,`'火'`,`'水'`,`'木'`,`'金'`,`'土'`
@@ -87,6 +87,17 @@ trimは切り捨てします
 
 weekを省略した場合は、`月`です。(CONFIG.START_WEEKの値)  
 monthを省略した場合は、1です。(CONFIG.START_MONTHの値)
+
+
+## getISOWeekNumber
+
+ISO週番号を取得します  
+
+`{Number} Koyomi.getISOWeekNumber({Date|String} date)`
+
+月は1月始まりで、週は月曜始まりです  
+さらに、年初・年末は週に締める日数が少ない(三日以内)の時に、前年・翌年の週番号となります
+
 
 ## getXDay
 

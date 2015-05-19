@@ -33,6 +33,7 @@ require('./format/all.js');
 
 // helper
 require('./helper/get-date-array');
+require('./helper/get-iso-week-number');
 require('./helper/get-nengo');
 require('./helper/get-week-index');
 require('./helper/get-week-number-class');
@@ -50,6 +51,7 @@ require('./nendo/separate');
 
 // open-close
 require('./open-close/check-day-info-holiday');
+require('./open-close/forced');
 require('./open-close/is-holiday-closed');
 require('./open-close/is-opened');
 require('./open-close/is-regular-holiday');

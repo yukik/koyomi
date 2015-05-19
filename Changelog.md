@@ -1,3 +1,19 @@
+# Change Log
+
+
+ 0.3.4 / 2015-05-20
+===================
+
+ * getISOWeekNumberの追加
+ * パラメータ文字列 GGG Ri 追加 Mj 削除
+ * パラメータ文字列
+ * const整理
+ * format.jsの定数設定を切り出し、defineMushにパラメータ文字列を後から変更した時に対応可能にする
+ * テストにWAREKI,wareki追加
+ * forcedOpenClose, forcedOpen, forcedCloseの修正とテスト追加
+ * example/calc追加
+
+
  0.3.3 / 2015-05-17
 ===================
 

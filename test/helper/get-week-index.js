@@ -1,4 +1,4 @@
-// 週番号
+// 週インデックス
 var Koyomi = require('../..');
 var get = Koyomi.getWeekIndex.bind(Koyomi);
 var eq = require('assert').deepEqual;

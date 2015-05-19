@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>計算</title>
+  <style type='text/css'>
+    * {color: #6a1917;}
+    dl {width:1200px;}
+    dt {width:350px;float:left;padding:10px;border-bottom:1px solid #ccc;}
+    dd {margin-left:350px;padding:10px;border-bottom:1px solid #ccc;}
+    input {width: 180px;}
+  </style>
+  <script type="text/javascript" src="../../public/koyomi.min.js"></script>
+  <script type="text/javascript" src="./script.js"></script>
+</head>
+<body onLoad="load()">
+
+  <h1>クラスメソッド</h1>
+
+  <dl onKeyup="classCalc(event)">
+
+    <dt>Koyomi.add(date, value)</dt>
+    <dd>( <input id="Add1" dt />, <input id="Add2" value="2ヶ月" /> ) &#x226B; <input type="text" id="AddR" /></dd>
+  
+    <dt>Koyomi.isLeep(date)</dt>
+    <dd>( <input type="text" id="IsLeap1" d /> ) &#x226B; <input type="text" id="IsLeapR" /></dd>
+
+    <dt>Koyomi.start(date, grid)</dt>
+    <dd>( <input type="text" id="Start1" dt />, <input type="text" id="Start2" value="月" /> ) &#x226B; <input type="text" id="StartR" /></dd>
+
+    <dt>Koyomi.end(date, grid)</dt>
+    <dd>( <input type="text" id="End1" dt />, <input type="text" id="End2" value="月" /> ) &#x226B; <input type="text" id="EndR" /></dd>
+
+    <dt>Koyomi.diffDays(from, to)</dt>
+    <dd>( <input type="text" id="DiffDays1" d />, <input type="text" id="DiffDays2" d /> ) &#x226B; <input type="text" id="DiffDaysR" /></dd>
+
+    <dt>Koyomi.diffMinutes(from, to)</dt>
+    <dd>( <input type="text" id="DiffMinutes1" dt />, <input type="text" id="DiffMinutes2" dt /> ) &#x226B; <input type="text" id="DiffMinutesR" /></dd>
+
+    <dt>Koyomi.diffSeconds(from, to)</dt>
+    <dd>( <input type="text" id="DiffSeconds1" dt />, <input type="text" id="DiffSeconds2" dt /> ) &#x226B; <input type="text" id="DiffSecondsR" /></dd>
+
+    <dt>Koyomi.yearDays(date)</dt>
+    <dd>( <input type="text" id="YearDays1" d /> ) &#x226B; <input type="text" id="YearDaysR" /></dd>
+
+    <dt>Koyomi.monthDays(date)</dt>
+    <dd>( <input type="text" id="MonthDays1" d /> ) &#x226B; <input type="text" id="MonthDaysR" /></dd>
+
+    <dt>Koyomi.passYearDays(date)</dt>
+    <dd>( <input type="text" id="PassYearDays1" d /> ) &#x226B; <input type="text" id="PassYearDaysR" /></dd>
+
+    <dt>Koyomi.passDays(date)</dt>
+    <dd>( <input type="text" id="PassDays1" d /> ) &#x226B; <input type="text" id="PassDaysR" /></dd>
+
+    <dt>Koyomi.remainYearDays(date)</dt>
+    <dd>( <input type="text" id="RemainYearDays1" d /> ) &#x226B; <input type="text" id="RemainYearDaysR" /></dd>
+
+    <dt>Koyomi.remainDays(date)</dt>
+    <dd>( <input type="text" id="RemainDays1" d /> ) &#x226B; <input type="text" id="RemainDaysR" /></dd>
+
+    <dt>Koyomi.getHolidays(date)</dt>
+    <dd>( <input type="text" id="GetHolidays1" y /> ) &#x226B; <input type="text" id="GetHolidaysR" style="width:500px;" /></dd>
+
+    <dt>Koyomi.getHolidayName(date)</dt>
+    <dd>( <input type="text" id="GetHolidayName1" d /> ) &#x226B; <input type="text" id="GetHolidayNameR" /></dd>
+
+    <dt>Koyomi.getDateArray(value)</dt>
+    <dd>( <input type="text" id="GetDateArray1" value="12/29-1/3" /> ) &#x226B; <input type="text" id="GetDateArrayR" style="width:500px;" /></dd>
+
+    <dt>Koyomi.getNengo(value)</dt>
+    <dd>( <input type="text" id="GetNengo1" d /> ) &#x226B; <input type="text" id="GetNengoR" style="width:500px;" /></dd>
+
+    <dt>Koyomi.getWeekIndex(value)</dt>
+    <dd>( <input type="text" id="GetWeekIndex1" value="月,火" /> ) &#x226B; <input type="text" id="GetWeekIndexR" /></dd>
+
+    <dt>Koyomi.getWeekNumber(value, startWeek, startMonth)</dt>
+    <dd>( <input type="text" id="GetWeekNumber1" d />, <input type="text" id="GetWeekNumber2" value="月" />, <input type="text" id="GetWeekNumber3" value="4" /> ) &#x226B; <input type="text" id="GetWeekNumberR" /><br />&nbsp;</dd>
+
+    <dt>Koyomi.getXDay(year, month, x, week)<br />&nbsp;</dt>
+    <dd>( <input type="text" id="GetXDay1" y />, <input type="text" id="GetXDay2" m />, <input type="text" id="GetXDay3" value="2" />, <input type="text" id="GetXDay4" value="月" /> ) &#x226B; <input type="text" id="GetXDayR"/></dd>
+
+  </dl>
+
+  <h1>インスタンスメソッド</h1>
+
+  <h2>設定</h2>
+
+  <dl onKeyup="setConfig()">
+
+    <dt>defaultFormat</dt>
+    <dd><input id="defaultFormat" value="Y年M月D日 Ajh時m分s秒>>短縮" style="width:200px;" /></dd>
+
+    <dt>holidayOpened</dt>
+    <dd><input id="holidayOpened" value="false" /></dd>
+
+    <dt>regularHoliday</dt>
+    <dd><input id="regularHoliday" value="土,日" /></dd>
+    
+    <dt>seasonHoliday</dt>
+    <dd><input id="seasonHoliday" value="12/30-1/3, 8/16-8-18" /></dd>
+    
+    <dt>startMonth</dt>
+    <dd><input id="startMonth" value="4" /></dd>
+
+    <dt>startWeek</dt>
+    <dd><input id="startWeek" value="日" /></dd>
+
+    <dt>six</dt>
+    <dd><input id="six" value="true" /></dd>
+
+  </dl>
+
+  <h2>メソッド</h2>
+
+  <dl onKeyup="instanceCalc(event)">
+
+    <dt>koyomi.start(date, grid)</dt>
+    <dd>( <input type="text" id="start1" d />, <input type="text" id="start2" value="年" /> ) &#x226B; <input type="text" id="startR" /></dd>
+
+    <dt>koyomi.end(date, grid)</dt>
+    <dd>( <input type="text" id="end1" d />, <input type="text" id="end2" value="年" /> ) &#x226B; <input type="text" id="endR" /></dd>
+
+    <dt>koyomi.addEigyobi(date, days, include)</dt>
+    <dd>( <input type="text" id="addEigyobi1" d />, <input type="text" id="addEigyobi2" value="1" />, <input type="text" id="addEigyobi3" value="false" /> ) &#x226B; <input type="text" id="addEigyobiR" /></dd>
+
+    <dt>koyomi.toEigyobi(date, days, include)</dt>
+    <dd>( <input type="text" id="toEigyobi1" d />, <input type="text" id="toEigyobi2" value="1" />, <input type="text" id="toEigyobi3" value="false" /> ) &#x226B; <input type="text" id="toEigyobiR" /></dd>
+
+    <dt>koyomi.countEigyobi(from, to)</dt>
+    <dd>( <input type="text" id="countEigyobi1" d />, <input type="text" id="countEigyobi2" d /> ) &#x226B; <input type="text" id="countEigyobiR" /></dd>
+
+    <dt>koyomi.nendoEigyobi(date)</dt>
+    <dd>( <input type="text" id="nendoEigyobi1" d /> ) &#x226B; <input type="text" id="nendoEigyobiR" /></dd>
+
+    <dt>koyomi.monthEigyobi(date)</dt>
+    <dd>( <input type="text" id="monthEigyobi1" d /> ) &#x226B; <input type="text" id="monthEigyobiR" /></dd>
+
+    <dt>koyomi.passNendoEigyobi(date)</dt>
+    <dd>( <input type="text" id="passNendoEigyobi1" d /> ) &#x226B; <input type="text" id="passNendoEigyobiR" /></dd>
+
+    <dt>koyomi.passEigyobi(date)</dt>
+    <dd>( <input type="text" id="passEigyobi1" d /> ) &#x226B; <input type="text" id="passEigyobiR" /></dd>
+
+    <dt>koyomi.remainNendoEigyobi(date)</dt>
+    <dd>( <input type="text" id="remainNendoEigyobi1" d /> ) &#x226B; <input type="text" id="remainNendoEigyobiR" /></dd>
+
+    <dt>koyomi.remainEigyobi(date)</dt>
+    <dd>( <input type="text" id="remainEigyobi1" d /> ) &#x226B; <input type="text" id="remainEigyobiR" /></dd>
+
+    <dt>koyomi.getNendo(date)</dt>
+    <dd>( <input type="text" id="getNendo1" d /> ) &#x226B; <input type="text" id="getNendoR" style="width:320px;"/></dd>
+
+    <dt>koyomi.formatNendo(date, fromFormat, toFormat, reverse)</dt>
+    <dd>( <input type="text" id="formatNendo1" d />, <input type="text" id="formatNendo2" value="Y/M" />, <input type="text" id="formatNendo3" value="-Y/M" />, <input type="text" id="formatNendo4" value="false" /> ) &#x226B; <input type="text" id="formatNendoR" /></dd>
+
+    <dt>koyomi.nendoDays(date)</dt>
+    <dd>( <input type="text" id="nendoDays1" d /> ) &#x226B; <input type="text" id="nendoDaysR" /></dd>
+
+    <dt>koyomi.passNendoDays(date)</dt>
+    <dd>( <input type="text" id="passNendoDays1" d /> ) &#x226B; <input type="text" id="passNendoDaysR" /></dd>
+
+    <dt>koyomi.remainNendoDays(date)</dt>
+    <dd>( <input type="text" id="remainNendoDays1" d /> ) &#x226B; <input type="text" id="remainNendoDaysR" /></dd>
+
+    <dt>koyomi.isOpened(date)</dt>
+    <dd>( <input type="text" id="isOpened1" d /> ) &#x226B; <input type="text" id="isOpenedR" /></dd>
+
+    <dt>koyomi.forcedOpen(date)</dt>
+    <dd>( <input type="text" id="forcedOpen1" d /> ) &#x226B; <input type="text" id="forcedOpenR" /></dd>
+
+    <dt>koyomi.forcedClose(date)</dt>
+    <dd>( <input type="text" id="forcedClose1" d /> ) &#x226B; <input type="text" id="forcedCloseR" /></dd>
+
+    <dt>koyomi.isRegularHoliday(date)</dt>
+    <dd>( <input type="text" id="isRegularHoliday1" d /> ) &#x226B; <input type="text" id="isRegularHolidayR" /></dd>
+
+    <dt>koyomi.isSeasonHoliday(date)</dt>
+    <dd>( <input type="text" id="isSeasonHoliday1" d /> ) &#x226B; <input type="text" id="isSeasonHolidayR" /></dd>
+
+    <dt>koyomi.isHolidayClosed(date)</dt>
+    <dd>( <input type="text" id="isHolidayClosed1" d /> ) &#x226B; <input type="text" id="isHolidayClosedR" /></dd>
+
+  </dl>
+
+</body>
+</html>
