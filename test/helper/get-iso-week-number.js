@@ -1,4 +1,4 @@
-// 週番号の取得
+// ISO週番号の取得
 var Koyomi = require('../..');
 var get = Koyomi.getISOWeekNumber;
 var eq = require('assert').equal;

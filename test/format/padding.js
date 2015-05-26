@@ -6,6 +6,7 @@ var eq = require('assert').equal;
 // 0埋め
 eq(format(20150101, 'D'),            '1');
 eq(format(20150101, 'D>0'),        '1st');   // 序数になる
+eq(format(20150101, 'DD>0'),      '01st');   // 序数になる
 eq(format(20150101, 'D>1'),          '1');
 eq(format(20150101, 'D>2'),         '01');
 eq(format(20150101, 'D>3'),        '001');

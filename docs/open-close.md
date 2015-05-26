@@ -10,6 +10,7 @@
 
 それ以外の場合はすべて営業日になります  
 また、個別に営業日も設定でき、その設定は休業設定よりも優先されます  
+個別に設定された休業日以外の設定は[インスタンスの作成](./instance.md)時に行います
 
 メソッドはいずれもインスタンスメソッドです
 
@@ -79,4 +80,17 @@ closeによって強制的に休業日に設定されているかどうかを判
 
 `{Boolean} koyomi.isHolidayClosed({Date|String} date)`
 
+
+# ドキュメント一覧
+
+  + [イントロダクション ../README.md](../README.md)
+  + [インスタンスの作成 ./instance.md](./instance.md)
+  + [フォーマット ./format.md](./format.md)
+  + [日時の情報取得・操作 ./calc-date.md](./calc-date.md)
+  + [営業日計算 ./eigyobi.md](./eigyobi.md)
+  + [カレンダー情報 ./calendar.md](./calendar.md)
+  + [年度 ./nendo.md](./nendo.md)
+  + [祝日 ./holiday.md](./holiday.md)
+  + 営業・休業 ./open-close.md
+  + [補助関数 ./helper.md](./helper.md)
 

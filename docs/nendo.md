@@ -13,7 +13,7 @@
   + プロパティ`startMonth`の値に影響します
   + `date`が含まれる期間の年度を検出します
   + 省略した場合は、本日を対象にします
-  + 戻り値のオブジェクトは次の形式
+  + 戻り値のオブジェクトは次の形式です
       + `{from: Dateオブジェクト, to: Dateオブジェクト}`
 
 
@@ -52,3 +52,16 @@
 
 `{Number} koyomi.remainNendoDays({Date|String} date)`
 
+
+# ドキュメント一覧
+
+  + [イントロダクション ../README.md](../README.md)
+  + [インスタンスの作成 ./instance.md](./instance.md)
+  + [フォーマット ./format.md](./format.md)
+  + [日時の情報取得・操作 ./calc-date.md](./calc-date.md)
+  + [営業日計算 ./eigyobi.md](./eigyobi.md)
+  + [カレンダー情報 ./calendar.md](./calendar.md)
+  + 年度 ./nendo.md
+  + [祝日 ./holiday.md](./holiday.md)
+  + [営業・休業 ./open-close.md](./open-close.md)
+  + [補助関数 ./helper.md](./helper.md)

@@ -1,6 +1,6 @@
 require('./A');  // 午前午後
 require('./B');  // 営業日数(年)
-require('./C');  // 休業理由
+// require('./C'); 未使用
 require('./D');  // 日
 require('./E');  // 営業日・休業日
 require('./F');  // 祝日

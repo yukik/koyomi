@@ -33,6 +33,8 @@ eq(toDate(x, false) === x, false); // 複製を返す
 
 // -------- 文字列
 
+eq(toDate('2015年11月23日午後1時20分'), new Date(2015, 10, 23, 13, 20, 0));
+
 // 数字(型:文字列)
 eq(toDate('2015'),           new Date(2015,  0,  1          ));
 eq(toDate('201501'),         new Date(2015,  0,  1          ));
