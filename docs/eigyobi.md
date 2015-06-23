@@ -8,14 +8,13 @@
 ## addEigyobi
 
 日付に営業日を加算した日付の算出を行うことができます  
-`koyomi.format`の営業日を指定した場合と動作は同じですが、整形を行いません
 
 `{Date} koyomi.addEigyobi({Date|String} date, {Number} days, {Boolean} include)`
 
   + date
     + 基準となる日時です
     + 必須です
-    + 日にちの部分は変更されます
+    + 日にちの部分のみ計算の対象になります
     + 時間部分の値は変化しません
   + days
     + カウントする営業日数

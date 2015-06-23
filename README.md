@@ -11,6 +11,36 @@
   + 祝日一覧の取得
   + カレンダーデータの取得
 
+# 利用方法
+
+## node
+
+npm経由でインストールしてください
+
+`npm install koyomi`
+
+```
+var Koyomi = require('koyomi');
+var wareki = Koyomi.format('2015-7-15', 'WAREKI');
+
+var koyomi = new Koyomi();
+var noki = koyomi.addEigyobi('2015-5-1', 10);
+```
+
+## クライアントサイド
+
+`public/koyomi.min.js`を読み込んでください
+
+```
+<script src="koyomi.min.js"></script>
+<script>
+  var wareki = Koyomi.format('2015-7-15', 'WAREKI');
+
+  var koyomi = new Koyomi();
+  var noki = koyomi.addEigyobi('2015-5-1', 10);
+</script>
+```
+
 # 日本の暦
 
 ## 和暦
@@ -29,9 +59,8 @@ Koyomiでは和暦でフォーマットすることができます
 
 (注意)  
 1868年から明治ですが、グレゴリオ歴の導入は1873年（明治6年）以降のため、それ以前は和暦は旧暦のこよみになります。  
+Koyomiでは旧暦のサポートはしていません。  
 そのため、1872年以前での和暦のフォーマットは西暦表示になります  
-(旧暦のサポートはしていません。将来バージョンで機能が追加されるかもしません)
-
 
 ## 祝日
 
