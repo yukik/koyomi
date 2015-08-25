@@ -9,7 +9,7 @@ gulp.task('build', function () {
     .bundle()
     .pipe(source('koyomi.min.js'))
     .pipe(buffer())
-    .pipe(uglify())
+    .pipe(uglify({preserveComments: 'some'}))
     .pipe(gulp.dest('public'));
 });
 

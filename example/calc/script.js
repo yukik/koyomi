@@ -11,7 +11,7 @@ function load(skip){
   var now = new Date();
 
   var dt = Koyomi.format(now);
-  var d = Koyomi.format(now, 'Y-MM-DD');
+  var d = Koyomi.format(now, 'YYYY-MM-DD');
   var y = now.getFullYear();
   var m = now.getMonth() + 1;
 
