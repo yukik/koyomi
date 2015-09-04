@@ -7,6 +7,7 @@ require('./calc-date/diff-days');
 require('./calc-date/diff-minutes');
 require('./calc-date/end-class');
 require('./calc-date/end-instance');
+require('./calc-date/get-age');
 require('./calc-date/start-class');
 require('./calc-date/start-instance');
 

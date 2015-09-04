@@ -12,7 +12,7 @@ require('./H');  // 時
 // require('./L'); 未使用
 require('./M');  // 月もしくは分
 require('./N');  // 年(和暦)
-// require('./O'); 未使用
+require('./O');  // 年齢
 require('./P');  // 営業日数(月)
 require('./Q');  // 四半期
 require('./R');  // 週番号

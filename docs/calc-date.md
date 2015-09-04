@@ -180,6 +180,17 @@ Koyomi.remainYearDays('2015-2-10') // 322
 Koyomi.remainDays('2015-2-10') // 19
 ```
 
+# getAge
+
+年齢を取得します
+
+`{Number} Koyomi.getAge({Date|String} birthday, {Date|String} when)`
+
+whenを省略した場合は、本日です
+
+```
+Koyomi.getAge('1974-2-18', '2015-9-4'); // 41
+```
 
 # ドキュメント一覧
 
