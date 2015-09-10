@@ -192,6 +192,19 @@ whenを省略した場合は、本日です
 Koyomi.getAge('1974-2-18', '2015-9-4'); // 41
 ```
 
+# kind
+
+口語表現を取得します
+
+`{String} Koyomi.kind({Date|String} date, {Date|String} compareTo)`
+
+compareToを省略した場合は、現在日時です
+
+```
+Koyomi.kind('2015-9-1', '2015-9-10'); // 9日前
+Koyomi.kind('2:00', '1:55'); // 5分後
+```
+
 # ドキュメント一覧
 
   + [イントロダクション ../README.md](../README.md)

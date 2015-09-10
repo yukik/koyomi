@@ -8,7 +8,7 @@ require('./G');  // 年号
 require('./H');  // 時
 // require('./I'); 未使用
 // require('./J'); 日本語 (接尾語)
-// require('./K'); 未使用
+require('./K');  // 口語
 // require('./L'); 未使用
 require('./M');  // 月もしくは分
 require('./N');  // 年(和暦)
