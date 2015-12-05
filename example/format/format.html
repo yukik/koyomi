@@ -5,32 +5,57 @@
   <title>フォーマット</title>
   <script type="text/javascript" src="../../public/koyomi.min.js"></script>
   <style type='text/css'>
-    * {color: #6a1917;}
-    dl {width:600px;}
-    dt {width:160px;float:left;padding:10px;border-bottom:1px solid #ccc;}
-    dd {margin-left:180px;padding:10px;border-bottom:1px solid #ccc;}
+    * {
+      color: #6a1917;
+    }
+    input {
+      border:0;
+      padding:10px;
+      font-size:1.3em;
+      border:solid 1px #ccc;
+      margin:0 0 20px;
+      width:300px;
+    }
+    dl {
+      margin: 0;
+      padding: 0;
+      border: #ccc solid 1px;
+      border-width: 0 1px 1px;
+    }
+    dt {
+      margin: 0;
+      padding: 0.2em;
+      border-top: #ccc solid 1px;
+      font-size: 100%;
+      line-height: 1.6em;
+    }
+    dd {
+      margin: -2.0em 0 0 9em;
+      padding: 0.2em;
+      border-left: #ccc solid 1px;
+      line-height: 1.6em;
+    }
   </style>
   <script>
-    var koyomi = new Koyomi();
-
     function onLoad() {
       var html = '';
-      Object.keys(koyomi.parameters).forEach(function (key){
-        html += '<dt><input value="' + key + '" />&nbsp;&nbsp;&nbsp;&#x226B;</dt><dd><span></span>&nbsp;</dd>';
+      koyomi.parameters.forEach(function (key){
+        html += '<dt><input type="hidden" value="' + key + '" />' +
+                key + '&nbsp;&nbsp;&nbsp;&#x226B;' +
+                '<dd><span></span>&nbsp;';
       });
       document.getElementById('list').innerHTML = html;
-      document.getElementById('val').value = Koyomi.format(new Date(), 'Y-M-D H:mm:ss');
+      document.getElementById('val').value = koyomi.format(new Date(), 'YYYY-MM-DD H:II:SS');
       update();
     }
 
     function update() {
-      var inputs = document.getElementsByTagName('input');
-      var outputs = document.getElementsByTagName('span');
-      var value = inputs[0].value;
-      [].slice.call(inputs).forEach(function(x, i){
-        if (i) {
-          outputs[i].innerText = koyomi.format(value, x.value || '{ERR}入力してください');
-        }
+      var input  = document.getElementById('val');
+      var params = document.querySelectorAll('input[type=hidden]')
+      var outputs = document.querySelectorAll('span')
+      var date = koyomi.toDatetime(input.value);
+      [].slice.call(params).forEach(function(x, i){
+        outputs[i].innerText = date ? koyomi.format(date, x.value) : '';
       });
     }
   </script>
@@ -40,7 +65,8 @@
 <body onKeyup="update();" onLoad="onLoad();">
 
   <dl>
-    <dt><input type="text" id="val" /></dt><dd><span></span>&nbsp;</dd>
+    <dt>&nbsp;
+    <dd><input type="text" id="val" />
   </dl>
 
   <dl id="list"></dl>

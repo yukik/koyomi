@@ -1,11 +1,14 @@
-//フォーマット
-var Koyomi = require('../..');
-var koyomi = new Koyomi();
+// フォーマット
+var koyomi = require('../..').create();
 var format = koyomi.format.bind(koyomi);
 var eq = require('assert').equal;
 
+
+koyomi.startMonth = 1;
+koyomi.startWeek = '月';
+
 // 週番号
-// R Rj Rx Ri
+// R r
 
 eq(format(201501, 'R'),  '1');
 eq(format(201502, 'R'),  '5');
@@ -20,61 +23,49 @@ eq(format(201510, 'R'), '40');
 eq(format(201511, 'R'), '44');
 eq(format(201512, 'R'), '49');
 
+koyomi.startMonth = 4;
+koyomi.startWeek = '日';
 
-eq(format(201501, 'Rj'), '40');
-eq(format(201502, 'Rj'), '45');
-eq(format(201503, 'Rj'), '49');
-eq(format(201504, 'Rj'),  '1');
-eq(format(201505, 'Rj'),  '5');
-eq(format(201506, 'Rj'), '10');
-eq(format(201507, 'Rj'), '14');
-eq(format(201508, 'Rj'), '18');
-eq(format(201509, 'Rj'), '23');
-eq(format(201510, 'Rj'), '27');
-eq(format(201511, 'Rj'), '32');
-eq(format(201512, 'Rj'), '36');
-
-
-eq(format(201501, 'Rx'),  '1');
-eq(format(201502, 'Rx'),  '5');
-eq(format(201503, 'Rx'),  '9');
-eq(format(201504, 'Rx'), '14');
-eq(format(201505, 'Rx'), '18');
-eq(format(201506, 'Rx'), '23');
-eq(format(201507, 'Rx'), '27');
-eq(format(201508, 'Rx'), '31');
-eq(format(201509, 'Rx'), '36');
-eq(format(201510, 'Rx'), '40');
-eq(format(201511, 'Rx'), '44');
-eq(format(201512, 'Rx'), '49');
+eq(format(201501, 'R'), '40');
+eq(format(201502, 'R'), '45');
+eq(format(201503, 'R'), '49');
+eq(format(201504, 'R'),  '1');
+eq(format(201505, 'R'),  '5');
+eq(format(201506, 'R'), '10');
+eq(format(201507, 'R'), '14');
+eq(format(201508, 'R'), '18');
+eq(format(201509, 'R'), '23');
+eq(format(201510, 'R'), '27');
+eq(format(201511, 'R'), '32');
+eq(format(201512, 'R'), '36');
 
 
-eq(format(201501, 'Ri'),  '1');
-eq(format(201502, 'Ri'),  '5');
-eq(format(201503, 'Ri'),  '9');
-eq(format(201504, 'Ri'), '14');
-eq(format(201505, 'Ri'), '18');
-eq(format(201506, 'Ri'), '23');
-eq(format(201507, 'Ri'), '27');
-eq(format(201508, 'Ri'), '31');
-eq(format(201509, 'Ri'), '36');
-eq(format(201510, 'Ri'), '40');
-eq(format(201511, 'Ri'), '44');
-eq(format(201512, 'Ri'), '49');
+eq(format(201501, 'r'),  '1');
+eq(format(201502, 'r'),  '5');
+eq(format(201503, 'r'),  '9');
+eq(format(201504, 'r'), '14');
+eq(format(201505, 'r'), '18');
+eq(format(201506, 'r'), '23');
+eq(format(201507, 'r'), '27');
+eq(format(201508, 'r'), '31');
+eq(format(201509, 'r'), '36');
+eq(format(201510, 'r'), '40');
+eq(format(201511, 'r'), '44');
+eq(format(201512, 'r'), '49');
 
 
 koyomi.startMonth = 9;
 koyomi.startWeek = '日';
 
-eq(format(201501, 'Rx'), '18');
-eq(format(201502, 'Rx'), '23');
-eq(format(201503, 'Rx'), '27');
-eq(format(201504, 'Rx'), '31');
-eq(format(201505, 'Rx'), '35');
-eq(format(201506, 'Rx'), '40');
-eq(format(201507, 'Rx'), '44');
-eq(format(201508, 'Rx'), '48');
-eq(format(201509, 'Rx'),  '1');
-eq(format(201510, 'Rx'),  '5');
-eq(format(201511, 'Rx'), '10');
-eq(format(201512, 'Rx'), '14');
+eq(format(201501, 'R'), '18');
+eq(format(201502, 'R'), '23');
+eq(format(201503, 'R'), '27');
+eq(format(201504, 'R'), '31');
+eq(format(201505, 'R'), '35');
+eq(format(201506, 'R'), '40');
+eq(format(201507, 'R'), '44');
+eq(format(201508, 'R'), '48');
+eq(format(201509, 'R'),  '1');
+eq(format(201510, 'R'),  '5');
+eq(format(201511, 'R'), '10');
+eq(format(201512, 'R'), '14');

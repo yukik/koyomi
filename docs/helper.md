@@ -1,131 +1,159 @@
 # 補助関数
 
-## toDate
 
-Dateオブジェクトを作成します。  
+## parse
 
-`{Date} Koyomi.toDate({Date|String|Array|Number|Object} date, {Boolean} trim)`
+口語から日時を返します
 
-dateは次の5つの方法で指定できます  
+`{Date} koyomi.parse({String} value, {Date} now)`
+
+nowは省略した場合に現在時刻を基準として、valueを解釈します  
+valueに設定できる項目は次のとおり  
+xには数字が入ります。（全角・漢数字も可）。wには日-土の曜日が入ります
+
+今、いま、now、今日、きょう、本日、today、昨日、きのう、yesterday、  
+明日、あす、あした、tomorrow、あさって、明後日、おととい、おとつい、一昨日、  
+年初、年頭、今年初め、今年始め、年末、歳末、今年末、  
+来年初め、来年始め、来年末、昨年初め、昨年始め、昨年末、  
+年度初め、年度始め、年度頭、年度末、  
+月初、月初め、月始め、今月初め、今月始め、月末、今月末、月終わり、今月終わり、  
+先月初め、先月末、来月初め、来月末、  
+週初め、週初、今週初め、週開始、週末、今週末、週終わり、  
+x年前、x年後、半年前、半年後、ひと月前、ひと月後、  
+xヶ月前、xカ月前、xケ月前、xか月前、xヶ月後、xカ月後、xケ月後、xか月後、  
+x週間前、x週前、x週間後、x週後、x日前、x日後、x時間前、x時間後、  
+x分前、x分後、x秒前、x秒後、xミリ秒前、xミリ秒後、  
+今月x日、今月のx日、先月x日、先月のx日、来月x日、来月のx日、先々月x日、  
+先々月のx日、再来月x日、再来月のx日、今度のx日、次のx日、  
+今週w曜日、今週のw曜日、先週w曜日、先週のw曜日、来週w曜日、来週のw曜日、  
+先々週w曜日、先々週のw曜日、再来週w曜日、再来週のw曜日、  
+今度のw曜日、次のw曜日、前回のw曜日、前のw曜日  
+x営業日前、x営業日、x営業日後
+
+年度、週の開始は`koyomi.startMonth`、`koyomi.startWeek`に依存します
+
+解釈できなかった場合は、toDatetimeへ処理が委譲します
+
+## toDatetime
+
+Dateオブジェクトを作成します。
+
+`{Date} koyomi.toDatetime({Date|String|Array|Number|Object} date)`
+
+dateは次の5つの方法で指定できます
 省略した場合は、nullが返されます
 
   + Dateオブジェクト
   + 文字列
       + 和暦、漢数字、全角数字、時刻に対応しています
       + 時刻のみを指定した場合は日付の部分は本日です
-        + 時刻のみの指定は数字以外の最初に現れる文字が以下である場合で判別します
-        + `'am'`,`'pm'`,`'AM'`,`'PM'`,`'午前'`,`'午後'`,`':'`,`'：'`,`'時'`
+      + 年を省略した場合は、今年度の日付を指定したと解釈します
+      + 月末日を簡単に指定することができます
+      + 解釈ルールは詳しく後述します
   + 配列
       + [年, 月, 日, 時, 分, 秒, ミリ秒]
       + 月以降省略した場合は、その部で最初の数値が適用されます
-      + 月の部を1月にする場合は1を指定します(0ではありません)
+      + 月の最初の数値は年度の開始月です
+      + 月の部を1月にする場合は1を指定します(Dateクラスのように0ではありません)
   + 数字
-      + YYYYMMDDHHmmssの形式とみなす
+      + YYYYMMDDHHIISSの形式とみなします
       + MM以下は省略することができます
         + 省略した場合はそれぞれ1月1日0時0分0秒です
       + 西暦1000年未満の日時は桁不足になり数字では指定できません
+        + その際は文字列にすることで対応できます
   + オブジェクト
       + year, month, day, hours, minutes, seconds等のプロパティを持つ必要があります
       + そのほかに使用できるプロパティの一覧は次のとおりです
-          + 年。`'y'`、`'year'`、`'years'`、`'年'`、`'カ年'`、`'ヶ年'`、`'ケ年'`、`'か年'`。
+          + 年。`'y'`、`'year'`、`'years'`、`'年'`、`'年度'`、`'カ年'`、`'ヶ年'`、`'ケ年'`、`'か年'`。
           + 月。`'m'`、`'mo'`、`'mon'`、`'month'`、`'months'`、`'月'`、`'カ月'`、`'ヶ月'`、`'ケ月'`、`'か月'`。
           + 日。`'d'`、`'day'`、`'days'`、`'日'`。
           + 時。`'h'`、`'hour'`、`'hours'`、`'時'`、`'時間'`。
           + 分。`'i'`、`'min'`、`'minute'`、`'minutes'`、`'分'`。
           + 秒。`'s'`、`'sec'`、`'second'`、`'seconds'`、`'秒'`。
-      + 年月日を同時に省略すると本日の日付に、個別の省略は、年・月・日がそれぞれ今年・1月・1日です
+      + 年月日を同時に省略すると本日の日付に、個別の省略は、年・月・日がそれぞれstartMonth・1月・1日です
       + 時分秒を省略すると0時・0分・0秒が設定されます
 
-trimは時以下の切り捨てを指定します
 
-  + trimをtrueにすることで、時以下を切り捨てます。既定値 `null`
-  + trimにfalseを設定した場合は、切り捨てはしませんが、必ず複製されたDateオブジェクトを返します
-      + Dateオブジェクトの場合に通常そのまま参照をかえします
+### 解釈できる文字列の例
+
+2015-6-1、2015-06-01、2015.6.1、2015.06.01、2015/6/1、2015/06/01、2015年6月1日、２０１５年６月１日、  
+二〇一五年一〇月二三日、二〇一五年十月二十三日、二千十五年十月二十三日、平成27年10月23日、H27.10.23、  
+2015-6-1 14:20、2015-6-1 14時20分、午後二時、2015、2015-10、10/23、2015年6月末日、6月末日
+
+ISO8601拡張形式の文字列とDateが標準で対応している次の形式では、オフセットが異なる日時を日本時間にして取得することができます  
+
+  * 日にちと時刻の間は半角スペースまたはTです
+  * オフセットは時刻の後に続けて`+9:00`、`-200`、`+5`、`GTM+200`、`GTM-7`、`Z`などで表す
+
+`2015-08-16T12:34+8:00`は`2015年8月16日 13時34分56秒`です  
+`2015-08-16 12:34:56Z`は`2015年8月16日 21時34分56秒`です  
+
+
+**注意** 文字列で指定した場合は、`koyomi.toDatetime`は常にローカル日時を返します  
+処理系によっては`new Date('2015-1-1')`と`new Date('2015-01-01')`は、前者がローカル日時、後者が世界標準時の日時を返します  
+
+
+## toDate
+
+toDatetimeとほぼ同じ処理を行いますが、時以下の部分を省略したものを返します
+
 
 他のメソッドとの関係
 
-  + このメソッドは、他のメソッドの引数で`{Date|String} date`となっているものすべてで利用されています
+  + このメソッドとtoDatetimeは、他のメソッドの引数で`{DATE} date`となっているものすべてで利用されています
   + そのため、他のメソッドでも和暦の入力や配列での入力を受け付けることができます
   + この事によってメソッドによっては便利な場合があります
-      + 年の総日数を受け付ける`Koyomi.yearDays`の引数は日付ですが、数字の`2015`などを渡しても正常に動作します
+      + 例えば週番号を計算する場合は`koyomi.getWeekNumber`を利用します
+      + 引数は日付ですが、数字の`20150820`などを渡しても正常に動作します
 
-
-## getDateArray
-
-文字列を日付の配列に変更します
-
-`{Array} Koyomi.getDateArray({String} value)`
-
-`'12/29-1/3, 8/16-8/18, 10/10' -> [1229, 1230, 1231, 101, 102, 103, 816, 817, 818, 1010] `  
-範囲指定は日付同士をハイフンでつなぎます
- 
-## getNengo
+## getEra
 
 年号オブジェクトを取得します
 
-`{Object} Koyomi.getNengo({Date|String} date, {Boolean} daily)`
+`{Object} koyomi.getEra({DATE} date, {Boolean} daily)`
 
   + `daily`を`true`にすると、日付区切りの期間で年号を判定します
   + 既定値はfalseで判定は年区切りの期間です
   + 年号オブジェクトは次のような形式です
-  + `{N: '昭和', n: 'S', y: 1926, d: new Date('1926-12-25 00:00:00.000')}`
+  + `{N: '昭和', n: 'S', y: 1926, d: D1926-12-25)}`
   + `N`は年号、`n`は省略記号、`y`は元年の年、`d`は開始日
-
-## getWeekIndex
-
-日曜を0、土曜を6とするインデックスを文字列から取得します
-
-`{String|Array} Koyomi.getWeekIndex({String|Array} value)`
-
-  + 受け付ける文字は、以下のとおり
-      + `'日'`,`'月'`,`'火'`,`'水'`,`'木'`,`'金'`,`'土'`
-      + `'Sun'`,`'Mon'`,`'Tue'`,`'Wed'`,`'Thu'`,`'Fri'`,`'Sat'`
-      + `'Sunday'`,`'Monday'`,`'Tuesday'`,`'Wednesday'`,`'Thursday'`,`'Friday'`,`'Saturday'`
-  + 英語は大文字小文字を区別しません
-  + 配列を渡すと配列で返します
-  + 変換例 `'火'` &#x226B; `2`、`'wed'` &#x226B; `3`、`['friday', 'saturday']` &#x226B; `[5, 6]`
-
-## getWeekNumber
-
-週番号を取得します
-
-`{Number} Koyomi.getWeekNumber({Date|String} date, {String} startWeek, {Number} startMonth)`
-
-weekを省略した場合は、`月`曜日です。(CONFIG.START_WEEKの値)  
-monthを省略した場合は、1です。(CONFIG.START_MONTHの値)
 
 
 ## getISOWeekNumber
 
-ISO週番号を取得します  
+ISO週番号を取得します
 
-`{Number} Koyomi.getISOWeekNumber({Date|String} date)`
+`{Number} koyomi.getISOWeekNumber({DATE} date)`
 
-月は1月始まりで、週は月曜始まりです  
+月は1月始まりで、週は月曜始まりです
 さらに、年初・年末は週に締める日数が少ない(三日以内)の時に、前年・翌年の週番号となります
+
+
+## getWeekNumber
+
+startWeekとstartMonthに影響した週番号を取得します
+
+`{Number} koyomi.getWeekNumber({DATE} date)`
 
 
 ## getXDay
 
-第２月曜日などの日にちを返す  
-返すのは日を表す数字で、Dateオブジェクトではありません
+dateを含む月の第x week曜日の日付を返します  
+dateを省略した場合は今月です
 
-`{Number} Koyomi.getXDay({Number} year, {Number} month, {Number} x, {String} week)`
+`{Date} koyomi.getXDay({Number} x, {String} week, {Date} date)`
 
-year年month月の第x week曜日を返します  
 xに5以上を指定した場合は最終の指定曜日の日とします
 
 
 # ドキュメント一覧
 
   + [イントロダクション ../README.md](../README.md)
-  + [インスタンスの作成 ./instance.md](./instance.md)
-  + [フォーマット ./format.md](./format.md)
-  + [日時の情報取得・操作 ./calc-date.md](./calc-date.md)  
-  + [営業日計算 ./eigyobi.md](./eigyobi.md)
-  + [カレンダー情報 ./calendar.md](./calendar.md)
-  + [年度 ./nendo.md](./nendo.md)
-  + [祝日 ./holiday.md](./holiday.md)
-  + [営業・休業 ./open-close.md](./open-close.md)
-  + 補助関数 ./helper.md
-
+  + [設定値 ./docs/config.md](./docs/config.md)
+  + [フォーマット ./docs/format.md](./docs/format.md)
+  + [日時の情報取得・操作 ./docs/calc-date.md](./docs/calc-date.md)
+  + [営業日計算 ./docs/calc-biz.md](./docs/calc-biz.md)
+  + [カレンダー情報 ./docs/calendar.md](./docs/calendar.md)
+  + [祝日 ./docs/holiday.md](./docs/holiday.md)
+  + [営業・休業 ./docs/open-close.md](./docs/open-close.md)
+  + 補助関数 ./docs/helper.md

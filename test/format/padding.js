@@ -1,7 +1,8 @@
 // フォーマット
-var Koyomi = require('../..');
-var format = Koyomi.format.bind(Koyomi);
+var koyomi = require('../..').create();
+var format = koyomi.format.bind(koyomi);
 var eq = require('assert').equal;
+
 
 // 0埋め
 eq(format(20150101, 'D'),            '1');

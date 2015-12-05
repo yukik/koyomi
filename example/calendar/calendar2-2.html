@@ -21,26 +21,21 @@
 <body>
   <script>
     (function () {
+      // 必ず全てゴースト日になる列を省略するための最大値
+      var max = 31 + 6;
+      // 週の並び (max分)
+      var weeks = new Array(6+1).join('日月火水木金土').split('').slice(0, max);
 
-      var koyomi = new Koyomi();
+      koyomi.startMonth = 4;
+      koyomi.startWeek = weeks[0];
 
       // URLより表示年を取得 (取得できない場合は今年)
       var search = decodeURIComponent(location.search);
       var range = /^\?\d{1,4}$/.test(search) ? search.slice(1) : new Date().getFullYear();
 
-      // 必ず全てゴースト日になる列を省略するための最大値
-      var max = 31 + 6;
-
-      var week = '日,月,火,水,木,金,土,';
-      // var week = 'Sun,Mon,Tue,Wed,Thu,Fri,Sat,';  // 英語ヘッダー
-      // var week = '月,火,水,木,金,土,日,';         // 月曜初め
-
-      // 週の並び (max分)
-      var weeks = new Array(6+1).join(week).split(',').slice(0, max);
-
       // 曜日ヘッダの作成
-      var head = Koyomi.getWeekIndex(weeks).map(function(x, i){
-            var c = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
+      var head = weeks.map(function(x, i){
+            var c = x === '日' ? 'sun' : x === '土' ? 'sat' : 'weekday';
             return '<th class="' + c + '">' + weeks[i] + '</th>';
           }).slice(0, max).join('');
 
@@ -49,14 +44,14 @@
       html += '<caption>' +
               '<a href="?' + (range * 1 - 1) + '">&#x226A;</a>' +
               '&nbsp;&nbsp;&nbsp;' + range + '年&nbsp;&nbsp;&nbsp;' +
-              '&nbsp;&nbsp;&nbsp;' + koyomi.format(range + '-1-1', 'GGN') + '年&nbsp;&nbsp;&nbsp;' +
+              '&nbsp;&nbsp;&nbsp;' + koyomi.format(range + '-1-1', 'GGN') + '年度&nbsp;&nbsp;&nbsp;' +
               '<a href="?' + (range * 1 + 1) + '">&#x226B;</a>' +
               '</caption>\n';
       html += '<tr><th></th>' + head + '</tr>\n';
       var cut = 0;
 
       //カレンダーデータ
-      koyomi.getCalendarData(range, weeks[0]).forEach(function(day) {
+      koyomi.getCalendarData(range).forEach(function(day) {
 
         // 月初
         if (day.som) {
@@ -65,11 +60,11 @@
         }
 
         // 日
-        var title     = day.holiday || (day.closed === '休業日' ? '休業日' : null);
-        var className = day.ghost      ? 'ghost'   :
-                        title          ? 'holiday' :
-                        day.week === 0 ? 'sun'     :
-                        day.week === 6 ? 'sat'     : 'weekday';
+        var title     = day.close === '定休日' ? '' : day.close;
+        var className = (day.ghost     ? 'ghost' :
+                        day.week === 0 ? 'sun' :
+                        day.week === 6 ? 'sat' : 'weekday') +
+                        (title ? ' holiday' : '');
 
         if (max < ++cut) {
           // 余分なゴースト日を省略
@@ -85,7 +80,7 @@
           html += '</tr>\n';
         }
       });
-      
+
       document.write(html + '</table>');
 
     })();

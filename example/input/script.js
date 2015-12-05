@@ -1,5 +1,4 @@
-/*global Koyomi*/
-/*jshint jquery:true*/
+/*global koyomi,$*/
 
 function showInputCalendar (el, date) {
   var cal = $('#koyomiCalendar');
@@ -9,9 +8,7 @@ function showInputCalendar (el, date) {
 
   var input = $(el);
   var v = input.val();
-  date = date || (v ? Koyomi.toDate(v) : new Date());
-
-  var koyomi = new Koyomi();
+  date = date || koyomi.toDate(v) || new Date();
 
   var html = '<table id="koyomiCalendar">\n';
   var caption = '<a class="prev" href="#">&#x226A;</a>' +
@@ -29,7 +26,10 @@ function showInputCalendar (el, date) {
           '<th class="sat">土</th>' +
           '</tr>';
 
-  koyomi.getCalendarData(date, '日').forEach(function(day){
+
+  var days = koyomi.getCalendarData(date);
+
+  days.forEach(function(day){
 
     if (day.sow) {
       html += '<tr>';
@@ -41,7 +41,7 @@ function showInputCalendar (el, date) {
                 day.week === 6 ? 'day sat'     :
                 'day weekday';
 
-    var title = day.holiday || day.closed;
+    var title = day.close;
 
     if (title) {
       html += '<td class="' + cname + '" title="' + title + '">' + day.day + '</td>';
@@ -58,7 +58,7 @@ function showInputCalendar (el, date) {
   html += '</table>';
 
   input.after(html);
-  var cal = $(input.next()[0]);
+  cal = $(input.next()[0]);
   cal.click(function (e) {
     var target = $(e.target);
 
@@ -70,12 +70,12 @@ function showInputCalendar (el, date) {
     // 前月
     } else if (target.hasClass('prev')) {
       cal.remove();
-      showInputCalendar(el, Koyomi.add(date, '-1m'));
+      showInputCalendar(el, koyomi.add(date, '-1m'));
 
     // 来月
     } else if (target.hasClass('next')) {
       cal.remove();
-      showInputCalendar(el, Koyomi.add(date, '1m'));
+      showInputCalendar(el, koyomi.add(date, '1m'));
 
     // 閉じる
     } else if (target.hasClass('close')) {

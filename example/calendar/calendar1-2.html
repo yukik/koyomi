@@ -38,7 +38,13 @@
 
   <script>
     (function () {
-      var koyomi = new Koyomi();
+
+      // 週の並び
+      var weeks = '日月火水木金土'.split('');
+
+      koyomi.startMonth = 1;
+      koyomi.startWeek = weeks[0];
+
       var html = '';
 
       // URLより表示範囲を取得 (取得できない場合は今年)
@@ -46,19 +52,15 @@
       var range = /^\?\d{1,4}(\D\d{1,2}(-\d{1,4}\D\d{1,2})?)?$/.test(search) ?
         search.slice(1) : new Date().getFullYear();
 
-      // 週の並び
-      var weeks = '日月火水木金土'.split('');
-      // var weeks = 'Sun,Mon,Tue,Wed,Thu,Fri,Sat'.split(','); // 英語ヘッダー
-      // var weeks = '月火水木金土日'.split('');  // 週初めを月曜にする場合
 
       // 曜日ヘッダの作成
-      var head = Koyomi.getWeekIndex(weeks).map(function(x, i){
-            var c = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
+      var head = weeks.map(function(x, i){
+            var c = x === '日' ? 'sun' : x === '土' ? 'sat' : 'weekday';
             return '<th class="' + c + '">' + weeks[i] + '</th>';
           }).join('');
 
       // カレンダーデータ
-      koyomi.getCalendarData(range, weeks[0]).forEach(function(day) {
+      koyomi.getCalendarData(range).forEach(function(day) {
 
         // 月初
         if (day.som) {
@@ -72,11 +74,12 @@
         }
 
         // 日
-        var title     = day.holiday || (day.closed === '休業日' ? '休業日' : null);
-        var className = day.ghost      ? 'ghost'   :
-                        title          ? 'holiday' :
-                        day.week === 0 ? 'sun'     :
-                        day.week === 6 ? 'sat'     : 'weekday';
+        var title     = day.close === '定休日' ? '' : day.close;
+        var className = (day.ghost     ? 'ghost' :
+                        day.week === 0 ? 'sun' :
+                        day.week === 6 ? 'sat' : 'weekday') +
+                        (title ? ' holiday' : '');
+
         if (title) {
           html += '<td class="' + className + '" title="' + title + '">' + day.day + '</td>';
         } else {
@@ -94,7 +97,7 @@
         }
 
       });
-      
+
       document.getElementById('cal').innerHTML = html;
 
     })();

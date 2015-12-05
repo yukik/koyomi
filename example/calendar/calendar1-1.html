@@ -21,7 +21,8 @@
 <body>
   <script>
     (function () {
-      var koyomi = new Koyomi({startMonth: 4, startWeek: '日'});
+      koyomi.startMonth = 4;
+      koyomi.startWeek = '日';
       var html = '';
 
       // 曜日ヘッダ
@@ -44,11 +45,11 @@
         }
 
         // 日
-        var title     = day.holiday || (day.closed === '休業日' ? '休業日' : null);
-        var className = day.ghost      ? 'ghost'   :
-                        title          ? 'holiday' :
-                        day.week === 0 ? 'sun'     :
-                        day.week === 6 ? 'sat'     : 'weekday';
+        var title     = day.close === '定休日' ? '' : day.close;
+        var className = (day.ghost     ? 'ghost' :
+                        day.week === 0 ? 'sun' :
+                        day.week === 6 ? 'sat' : 'weekday') +
+                        (title ? ' holiday' : '');
         if (title) {
           html += '<td class="' + className + '" title="' + title + '">' + day.day + '</td>';
         } else {
@@ -66,7 +67,7 @@
         }
 
       });
-      
+
       document.write(html);
 
     })();

@@ -12,7 +12,7 @@
     .weekday {color: #6a1917;}
     .sat     {color: #7fbfff;}
     .sun     {color: #ff7f7f;}
-    .holiday {color: #ff7f7f; background: #ffe5e5;}
+    .holiday {background: #ffe5e5;}
     .ghost   {color: #dcdcdc;}
     td:hover {background: #fff;}
     td.holiday:hover {background: #fcc;}
@@ -21,28 +21,34 @@
 <body>
   <script>
     (function () {
-      var koyomi = new Koyomi({startMonth: 4, startWeek: '日'});
-
       // 必ず全てゴースト日になる列を省略するための最大値
       var max = 31 + 6;
-
       // 週の並び (max分)
       var weeks = new Array(6+1).join('日月火水木金土').split('').slice(0, max);
 
+      koyomi.startMonth = 4;
+      koyomi.startWeek = weeks[0];
+
+      var date = new Date();
+
+
       // 曜日ヘッダの作成
-      var head = Koyomi.getWeekIndex(weeks).map(function(x, i){
-            var c = x === 0 ? 'sun' : x === 6 ? 'sat' : 'weekday';
+      var head = weeks.map(function(x, i){
+            var c = x === '日' ? 'sun' : x === '土' ? 'sat' : 'weekday';
             return '<th class="' + c + '">' + weeks[i] + '</th>';
           }).slice(0, max).join('');
 
       // html作成
       var html = '<table>';
-      html += '<caption>' + koyomi.formatNendo(null, 'GGN年度 (Y/M', '-Y/M)') + '</caption>';
+      html += '<caption>' + koyomi.formatYear(date, 'GGN年度 (Y/M-Y/M)') + '</caption>';
       html += '<tr><th></th>' + head + '</tr>\n';
       var cut = 0;
 
+
+      var range = koyomi.format(date, 'YYYY');
+
       //カレンダーデータ
-      koyomi.getCalendarData().forEach(function(day) {
+      koyomi.getCalendarData(range).forEach(function(day) {
 
         // 月初
         if (day.som) {
@@ -51,11 +57,11 @@
         }
 
         // 日
-        var title     = day.holiday || (day.closed === '休業日' ? '休業日' : null);
-        var className = day.ghost      ? 'ghost'   :
-                        title          ? 'holiday' :
-                        day.week === 0 ? 'sun'     :
-                        day.week === 6 ? 'sat'     : 'weekday';
+        var title     = day.close === '定休日' ? '' : day.close;
+        var className = (day.ghost     ? 'ghost' :
+                        day.week === 0 ? 'sun' :
+                        day.week === 6 ? 'sat' : 'weekday') +
+                        (title ? ' holiday' : '');
 
         if (max < ++cut) {
           // 余分なゴースト日を省略
@@ -71,7 +77,7 @@
           html += '</tr>\n';
         }
       });
-      
+
       document.write(html + '</table>');
 
     })();

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>koyomi.form</title>
+  <script src="../public/koyomi.min.js"></script>
+  <style type='text/css'>
+    body {font-size: 120%;}
+    input {width:300px;}
+    dt {margin-top: 30px;}
+  </style>
+</head>
+<body>
+
+  <h1>koyomi.parse</h1>
+
+  <p>
+    口語を日時に変換するためのテストです。"昨日"、"二週間後"、"三営業日"などを入力してください
+  </p>
+
+  <dl>
+    <dt>リアルタイム
+    <dl><input id=input1 /><span id=output1></span>
+
+    <dt>エンターキー２回で確定
+    <dl><input id=input2 /><span id=output2></span>
+  </dl>
+
+  <script>
+    koyomi.defaultFormat = 'Y年M月D日 H時I分S秒>>短縮';
+
+    // リアルタイムに表示
+    var input1 = document.getElementById('input1');
+    var output1 = document.getElementById('output1');
+    input1.onkeyup = function () {
+      var v = koyomi.parse(this.value);
+      output1.innerHTML = v ? koyomi.format(v) : '';
+    };
+
+    // エンターキーで直接設定
+    var input2 = document.getElementById('input2');
+    var output2 = document.getElementById('output2');
+    var last;
+    input2.onkeyup = function (e) {
+      if (e.keyCode === 13) {
+        if (last !== this.value) {
+          last = this.value;
+          return;
+        }
+        var v = koyomi.parse(this.value);
+        if (v) {
+          this.value = koyomi.format(v);
+          this.select(0,this.value.length)
+          output2.innerHTML = '';
+        } else {
+          output2.innerHTML = '解釈できません';
+        }
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 // 年齢計算
-var Koyomi = require('../..');
-var get = Koyomi.getAge;
+var koyomi = require('../..').create();
+var get = koyomi.getAge.bind(koyomi);
 var eq = require('assert').equal;
 
 eq(get('1974-2-18', '2015-9-4'), 41);

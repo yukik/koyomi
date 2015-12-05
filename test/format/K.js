@@ -1,10 +1,11 @@
 // フォーマット
-var Koyomi = require('../..');
-var format = Koyomi.format.bind(Koyomi);
+var koyomi = require('../..').create();
+var format = koyomi.format.bind(koyomi);
 var eq = require('assert').equal;
 
+
 // 現在時刻から計算した日時を返す
-function d(ad) { return  Koyomi.add(new Date(), ad); }
+function d(ad) { return  koyomi.add(new Date(), ad); }
 
 // 口語
 // K

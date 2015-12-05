@@ -1,9 +1,9 @@
-//フォーマット
-var Koyomi = require('../..');
-var format = Koyomi.format.bind(Koyomi);
+// フォーマット
+var koyomi = require('../..').create();
+var format = koyomi.format.bind(koyomi);
 var eq = require('assert').equal;
 
-// 月もしくは分
+// 月
 
 // MMM, MM, M, Mj
 
@@ -27,15 +27,4 @@ eq(format('2015-4-1' , 'M'), '4');
 eq(format('2015-12-1', 'M'), '12');
 
 eq(format('2015-12-1', 'M>>漢数字'), '十二');
-
-
-
-// mm, m
-
-eq(format('2015-1-1', 'mm'), '00');
-eq(format('2015-1-1',  'm'),  '0');
-eq(format('00:09:10', 'mm'), '09');
-eq(format('00:09:10',  'm'),  '9');
-eq(format('00:12:56', 'mm'), '12');
-eq(format('00:12:56',  'm'), '12');
 

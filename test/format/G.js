@@ -1,9 +1,8 @@
 // フォーマット
-var Koyomi = require('../..');
-var format = Koyomi.format.bind(Koyomi);
+var koyomi = require('../..').create();
+var format = koyomi.format.bind(koyomi);
 var eq = require('assert').equal;
 
-/*jshint maxparams:6*/
 function test(input, GGG, GG, G, gg, g) {
   eq(format(input, 'GGG'), GGG);
   eq(format(input, 'GG'), GG);

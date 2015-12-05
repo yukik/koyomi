@@ -1,12 +1,9 @@
-/*global Koyomi*/
+/*global koyomi*/
 
 /**
  * 入力フォームのidから自動的に計算結果を貼り付けます
- * id名はクラスメソッドは最初の大文字にします
- * インスタンスメソッドはそのまま小文字です
  */
-
-var koyomi;
+var format = koyomi.format.bind(koyomi);
 
 // 初期値の設定
 function load(skip){
@@ -16,84 +13,46 @@ function load(skip){
 
   var now = new Date();
 
-  var dt = Koyomi.format(now);
-  var d = Koyomi.format(now, 'YYYY-MM-DD');
+  var dt = format(now);
+  var d = format(now, 'YYYY-MM-DD');
   var y = now.getFullYear();
   var m = now.getMonth() + 1;
 
   var els = document.getElementsByTagName('input');
   for(var i=0, len = els.length; i < len; i++) {
     var el = els[i];
-    if (el.value) {
+    if (!el.value) {
+      if (el.hasAttribute('y')) {
+        el.value = y;
 
-    } else if (el.hasAttribute('y')) {
-      el.value = y;
+      } else if (el.hasAttribute('m')) {
+        el.value = m;
 
-    } else if (el.hasAttribute('m')) {
-      el.value = m;
+      } else if (el.hasAttribute('dt')) {
+        el.value = dt;
 
-    } else if (el.hasAttribute('dt')) {
-      el.value = dt;
-
-    } else if (el.hasAttribute('d')) {
-      el.value = d;
-    }
-
-    var at = el.parentNode.parentNode.getAttribute('onKeyup');
-    if (at === 'classCalc(event)') {
-      classCalc({target: el});
-    } else if (at === 'instanceCalc(event)') {
-      instanceCalc({target: el});
+      } else if (el.hasAttribute('d')) {
+        el.value = d;
+      }
+      calc({target: el});
     }
   }
 }
 
-// クラスメソッド
-function classCalc(ev) {
-  var format = Koyomi.format.bind(Koyomi);
-  var id = ev.target.id;
-  if (id.slice(-1) === 'R') {
-    return;
-  }
-  var method = id.slice(0, id.length-1);
-  var args = [];
-  for (var i = 1, input; input = document.getElementById(method + i); i++) {
-    args.push(parseArgVal(input.value.trim()));
-  }
-  var rEl = document.getElementById(method + 'R');
-  method = method[0].toLowerCase() + method.slice(1);
-
-  var result;
-  try {
-    result = args.length ? Koyomi[method].apply(Koyomi, args) : Koyomi[method]();
-  } catch(e) {
-    result = 'ERR';
-  }
-  rEl.value = resultToString(result, format);
-}
-
-// インスタンス設定変更
+// 設定変更
 function setConfig() {
   var get = document.getElementById.bind(document);
-
-  var config = {
-    defaultFormat: get('defaultFormat').value,
-    holidayOpened: get('holidayOpened').value === 'true',
-    regularHoliday: get('regularHoliday').value,
-    seasonHoliday: get('seasonHoliday').value,
-    startMonth: get('startMonth').value * 1,
-    startWeek: get('startWeek').value,
-    six: get('six') === 'true'
-  };
-  try {
-    koyomi = new Koyomi(config);
-  } catch(e){}
+  koyomi.defaultFormat = get('defaultFormat').value;
+  koyomi.openOnHoliday = get('openOnHoliday').value === 'true';
+  koyomi.regularHoliday= get('regularHoliday').value;
+  koyomi.seasonHoliday = get('seasonHoliday').value;
+  koyomi.startMonth    = +get('startMonth').value;
+  koyomi.startWeek     = get('startWeek').value;
   load(true);
 }
 
-// インスタンスメソッド
-function instanceCalc(ev) {
-  var format = koyomi.format.bind(koyomi);
+// 再計算
+function calc(ev) {
   var id = ev.target.id;
   if (id.slice(-1) === 'R') {
     return;
@@ -110,7 +69,12 @@ function instanceCalc(ev) {
   } catch(e) {
     result = 'ERR';
   }
-  document.getElementById(method + 'R').value = resultToString(result, format);
+
+  try {
+    document.getElementById(method + 'R').value = resultToString(result, method);
+  } catch(e) {
+    console.log(e.message);
+  }
 }
 
 // 値パース
@@ -124,14 +88,14 @@ function parseArgVal(val) {
   } else if (val === 'false') {
     return false;
   } else if (/^\d+$/.test(val)) {
-    return val * 1;
+    return +val;
   } else {
     return val;
   }
 }
 
 // 結果文字列化
-function resultToString(result, format) {
+function resultToString(result) {
 
   if (result === null) {
     return 'null';
@@ -142,7 +106,9 @@ function resultToString(result, format) {
   }
 
   if (Array.isArray(result)) {
-    return '[' + result.map(function(r){return resultToString(r, format);}).join(', ') + ']';
+    return '[' +
+      result.map(function(r){return resultToString(r);}).join(', ') +
+    ']';
   }
 
   if (typeof result === 'object' && result.from && result.to) {
@@ -150,11 +116,12 @@ function resultToString(result, format) {
   }
 
   if (typeof result === 'object') {
-    return '{' + (Object.keys(result).map(function(k){
-      return k + ':\'' + result[k] +'\'';
-    }).join(', ')) + '}';
+    return '{' +
+        Object.keys(result).map(function(k){
+          return k + ':\'' + resultToString(result[k]) +'\'';
+        }).join(', ') +
+      '}';
   }
-
   return result;
 }
 

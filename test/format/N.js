@@ -1,7 +1,8 @@
 // フォーマット
-var Koyomi = require('../..');
-var format = Koyomi.format.bind(Koyomi);
+var koyomi = require('../..').create();
+var format = koyomi.format.bind(koyomi);
 var eq = require('assert').equal;
+
 
 function test(input, N, n) {
   eq(format(input, 'N'), N);

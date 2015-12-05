@@ -1,4 +1,3 @@
-
 // 祝日
 var get = require('../..').getHolidays;
 var test = require('assert').deepEqual;
@@ -10,7 +9,7 @@ test(get(1947), {});
 test(get(1948), {
   '923': '秋分の日',
   '1103': '文化の日',
-  '1123': '勤労感謝の日',
+  '1123': '勤労感謝の日'
 });
 
 test(get(1949), {
