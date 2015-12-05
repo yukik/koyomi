@@ -166,11 +166,11 @@ indexを省略した場合は指定日のすべてのイベントが削除され
 # ドキュメント一覧
 
   + [イントロダクション ../README.md](../README.md)
-  + [設定値 ./docs/config.md](./docs/config.md)
-  + [フォーマット ./docs/format.md](./docs/format.md)
-  + [日時の情報取得・操作 ./docs/calc-date.md](./docs/calc-date.md)
-  + [営業日計算 ./docs/calc-biz.md](./docs/calc-biz.md)
-  + カレンダー情報 ./docs/calendar.md
-  + [祝日 ./docs/holiday.md](./docs/holiday.md)
-  + [営業・休業 ./docs/open-close.md](./docs/open-close.md)
-  + [補助関数 ./docs/helper.md](./docs/helper.md)
+  + [設定値 ./config.md](./config.md)
+  + [フォーマット ./format.md](./format.md)
+  + [日時の情報取得・操作 ./calc-date.md](./calc-date.md)
+  + [営業日計算 ./calc-biz.md](./calc-biz.md)
+  + カレンダー情報 ./calendar.md
+  + [祝日 ./holiday.md](./holiday.md)
+  + [営業・休業 ./open-close.md](./open-close.md)
+  + [補助関数 ./helper.md](./helper.md)
