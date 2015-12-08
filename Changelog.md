@@ -1,5 +1,13 @@
 # Change Log
 
+ 0.5.2 / 2015-12-08
+===================
+  
+  * テストのutil/create.js、util/clone.jsを記述
+  * example/testを追加
+  * docs/config.md、startMonthの既定値を修正
+
+
  0.5.1 / 2015-12-06
 ===================
 

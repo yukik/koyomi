@@ -19,10 +19,9 @@ gulp.task('test', function () {
   browserify('test/test.js')
     .transform(babelify)
     .bundle()
-    .pipe(source('test.min.js'))
+    .pipe(source('test.js'))
     .pipe(buffer())
-    .pipe(uglify({preserveComments: 'some'}))
-    .pipe(gulp.dest('public'));
+    .pipe(gulp.dest('example/test'));
 });
 
 gulp.task('watch', function() {

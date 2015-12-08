@@ -1,7 +1,7 @@
 /**
  * console.logの代替え 行数・カラムを出力することができます
- * @param  {String|Number|Boolean|Date} v
- * @param  {Number}                     depth 呼び出し元を遡る場合に1以上の値
+ * @param  {Mixed}  v
+ * @param  {Number} depth 呼び出し元を遡る場合に1以上の値
  */
 module.exports = function deb(v, depth) {
   var stack = {};
