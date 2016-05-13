@@ -37,15 +37,20 @@ koyomiでは簡単に営業日の計算が計算できます
       * その期間の営業日数を返します
   * 日時を指定した場合
       * 二つの日付の間の営業日数を返します
-  * 期間('year', 'month', 'week')を指定した場合
+  * 期間(`年`,`月`,`日`,`year`,`month`,`week`など)を指定した場合
       * 第一引数が含まれる期間の開始日から終了日の営業日数を返す
 
 `{Number} koyomi.biz({String} yyyymm)`  
-または
+または  
 `{Number} koyomi.biz({DATE} from, {DATE} to)`  
 または  
 `{Number} koyomi.biz({DATE} date, {String} term)`
 
+```
+koyomi.biz('2015-1');                // 19
+koyomi.biz('2015-1-1', '2015-1-31'); // 19
+koyomi.biz('2015-1-1', '月');        // 19
+```
 
 ## passBiz
 

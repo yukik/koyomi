@@ -4394,7 +4394,8 @@ function createKey(date) {
 module.exports = getEra;
 
 var ERAS = require('../config').ERAS;
-var AD = ERAS[ERAS.length - 1];
+var LEN = ERAS.length;
+var AD = ERAS[LEN - 1];
 
 /**
  * @method getEra
@@ -4408,33 +4409,12 @@ function getEra(date, daily) {
   if (Y < 1873) {
     return AD;
   }
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    for (var _iterator = ERAS[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var item = _step.value;
-
-      if (daily && item.d <= date || !daily && item.y <= Y) {
-        return item;
-      }
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
+  for (var i = 0; i < LEN; i++) {
+    var item = ERAS[i];
+    if (daily && item.d <= date || !daily && item.y <= Y) {
+      return item;
     }
   }
-
   return AD;
 }
 
