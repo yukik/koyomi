@@ -5,27 +5,32 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
 
-gulp.task('build', function () {
-  browserify('lib/koyomi.js')
+const output = {
+  comments: 'some'
+};
+
+function build() {
+  return browserify('lib/koyomi.js')
     .transform(babelify)
     .bundle()
     .pipe(source('koyomi.min.js'))
     .pipe(buffer())
-    .pipe(uglify({preserveComments: 'some'}))
+    .pipe(uglify())
     .pipe(gulp.dest('public'));
-});
+}
 
-gulp.task('test', function () {
-  browserify('test/test.js')
+function test() {
+  return browserify('test/test.js')
     .transform(babelify)
     .bundle()
     .pipe(source('test.js'))
     .pipe(buffer())
     .pipe(gulp.dest('example/test'));
-});
+};
 
-gulp.task('watch', function() {
-  gulp.watch('lib/**/*.js', ['build']);
-});
+function watch() {
+  return gulp.watch('lib/**/*.js', build);
+};
 
-gulp.task('default', ['build', 'watch']);
+exports.test = test;
+exports.default = gulp.series(build, watch);;
