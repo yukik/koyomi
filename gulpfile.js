@@ -15,7 +15,7 @@ function build() {
     .bundle()
     .pipe(source('koyomi.min.js'))
     .pipe(buffer())
-    .pipe(uglify())
+    .pipe(uglify({ output }))
     .pipe(gulp.dest('public'));
 }
 
