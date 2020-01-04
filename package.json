@@ -10,13 +10,13 @@
   "author": "Yuki Kurata <yuki.kurata@gmail.com>",
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "@babel/register": "^7.4.0",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/register": "^7.7.7",
     "babelify": "^10.0.0",
-    "browserify": "^16.2.3",
-    "core-js": "^3.0.0",
-    "gulp": "^4.0.0",
+    "browserify": "^16.5.0",
+    "core-js": "^3.6.1",
+    "gulp": "^4.0.2",
     "gulp-uglify": "^3.0.2",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
@@ -28,7 +28,8 @@
   "main": "lib/koyomi.js",
   "version": "0.5.3",
   "scripts": {
-    "test": "node ./test/test.js"
+    "build": "gulp build",
+    "test": "node ./test/test.js && gulp test"
   },
   "directories": {},
   "readmeFilename": "README.md",
