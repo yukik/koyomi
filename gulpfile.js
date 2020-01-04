@@ -26,11 +26,12 @@ function test() {
     .pipe(source('test.js'))
     .pipe(buffer())
     .pipe(gulp.dest('example/test'));
-};
+}
 
 function watch() {
   return gulp.watch('lib/**/*.js', build);
-};
+}
 
 exports.test = test;
-exports.default = gulp.series(build, watch);;
+exports.build = build;
+exports.default = gulp.series(build, watch);
