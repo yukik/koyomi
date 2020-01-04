@@ -29,7 +29,7 @@
   "version": "0.5.3",
   "scripts": {
     "build": "gulp build",
-    "test": "node ./test/test.js"
+    "test": "node ./test/test.js && gulp test"
   },
   "directories": {},
   "readmeFilename": "README.md",
